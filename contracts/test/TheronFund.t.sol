@@ -30,7 +30,7 @@ contract TheronFundTest is Test {
     function setUp() public {
         wbot = new TestERC20();
         
-        nodeRegistry = new NodeRegistry();
+        nodeRegistry = new NodeRegistry(100 ether);
         nodeRegistry.grantRole(nodeRegistry.ORACLE_ROLE(), oracle);
         nodeRegistry.grantRole(nodeRegistry.MANAGER_ROLE(), manager);
 

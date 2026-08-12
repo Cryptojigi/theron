@@ -26,7 +26,7 @@ contract NodeRegistryTest is Test {
         yieldDistributor = new YieldDistributor(address(thnToken));
         thnToken.setYieldDistributor(address(yieldDistributor));
 
-        nodeRegistry = new NodeRegistry();
+        nodeRegistry = new NodeRegistry(100 ether);
         nodeRegistry.grantRole(nodeRegistry.ORACLE_ROLE(), oracle);
         nodeRegistry.grantRole(nodeRegistry.MANAGER_ROLE(), manager);
         nodeRegistry.setYieldDistributor(address(yieldDistributor));
@@ -157,5 +157,22 @@ contract NodeRegistryTest is Test {
 
         INodeRegistry.Node memory node = nodeRegistry.getNode(nodeOp);
         assertFalse(node.active);
+    }
+
+    function test_MinStakeIsConfigurable() public {
+        // A registry deployed with a 10 BOT stake must accept 10 BOT and reject less
+        NodeRegistry lowStakeRegistry = new NodeRegistry(10 ether);
+        lowStakeRegistry.setYieldDistributor(address(yieldDistributor));
+
+        vm.deal(nodeOp, 20 ether);
+        vm.prank(nodeOp);
+        lowStakeRegistry.registerNode{value: 10 ether}(nodeOp, "ipfs://specs", 0);
+        assertEq(lowStakeRegistry.getNodeCount(), 1);
+        assertEq(lowStakeRegistry.minStake(), 10 ether);
+
+        vm.deal(unauthorized, 9 ether);
+        vm.prank(unauthorized);
+        vm.expectRevert("Insufficient stake");
+        lowStakeRegistry.registerNode{value: 9 ether}(unauthorized, "ipfs://specs", 0);
     }
 }

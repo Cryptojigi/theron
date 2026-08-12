@@ -27,7 +27,10 @@ contract DeployScript is Script {
         address g2 = vm.envOr("GUARDIAN_2", address(0x2));
         address g3 = vm.envOr("GUARDIAN_3", address(0x3));
 
-        NodeRegistry nodeRegistry = new NodeRegistry();
+        uint256 minStake = vm.envOr("MIN_STAKE", uint256(10 ether)); // testnet 10 BOT (mainnet set 0.5 ether via env)
+        require(minStake > 0, "MIN_STAKE must be > 0");
+
+        NodeRegistry nodeRegistry = new NodeRegistry(minStake);
         nodeRegistry.grantRole(nodeRegistry.ORACLE_ROLE(), oracle);
         nodeRegistry.grantRole(nodeRegistry.MANAGER_ROLE(), manager);
 

@@ -28,7 +28,7 @@ contract DeployLocalScript is Script {
         TestERC20 wbot = new TestERC20();
         console.log("WBOT_ADDRESS=%s", address(wbot));
 
-        NodeRegistry nodeRegistry = new NodeRegistry();
+        NodeRegistry nodeRegistry = new NodeRegistry(10 ether); // local anvil: 10 BOT stake
         nodeRegistry.grantRole(nodeRegistry.ORACLE_ROLE(), oracle);
         nodeRegistry.grantRole(nodeRegistry.MANAGER_ROLE(), manager);
         console.log("NODE_REGISTRY_ADDRESS=%s", address(nodeRegistry));

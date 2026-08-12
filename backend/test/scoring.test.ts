@@ -46,6 +46,18 @@ describe('scoreNode', () => {
     expect(bigStake).toBeGreaterThan(minStake);
   });
 
+  it('score uses the contract-provided minStake', () => {
+    const base = { uptimePct: 95, nodeType: 0, revenueGenerated: 1000 };
+    // Same absolute stake (10 BOT) scores differently by network minStake:
+    const onTestnet = scoreNode({ ...base, stakeRequired: 10 }, 10); // 10 BOT = at minimum
+    const onMainnet = scoreNode({ ...base, stakeRequired: 10 }, 0.5); // 10 BOT = 20x minimum
+    expect(onMainnet).toBeGreaterThan(onTestnet);
+    // A stake exactly at minStake always yields the same baseline score
+    expect(scoreNode({ ...base, stakeRequired: 10 }, 10)).toBe(
+      scoreNode({ ...base, stakeRequired: 100 }, 100)
+    );
+  });
+
   it('score responds to real revenue changes (not hardcoded)', () => {
     const base = { uptimePct: 95, nodeType: 0, stakeRequired: 1000 };
     const rich = scoreNode({ ...base, revenueGenerated: 10000 });

@@ -16,10 +16,14 @@ export const WEIGHTS = {
   operator: 0.1,
 } as const;
 
-export const MIN_STAKE = 100; // 100 BOT, matches NodeRegistry
+export const MIN_STAKE = 100; // default fallback (BOT) — real value is passed in by the caller
 
-export function scoreNode(inputs: ScoreInputs): number {
+export function scoreNode(
+  inputs: ScoreInputs,
+  minStake: number = MIN_STAKE
+): number {
   const { uptimePct, nodeType, stakeRequired, revenueGenerated } = inputs;
+  const effectiveMinStake = minStake > 0 ? minStake : MIN_STAKE;
 
   // Uptime: real (0-100)
   const uptime = Math.max(0, Math.min(100, uptimePct));
@@ -27,12 +31,12 @@ export function scoreNode(inputs: ScoreInputs): number {
   // Hardware: GPU (0) > CPU (1)
   const hardware = nodeType === 0 ? 90 : 60;
 
-  // Stake collateral ratio: stake vs min required.
-  // Logarithmic scale: 100 BOT (min) = 20, 1,000 = 60, 10,000+ = 100.
+  // Stake collateral ratio: stake vs the contract's configured minimum.
+  // Logarithmic scale: 1x min = 20, 10x = 60, 100x+ = 100.
   const stake =
-    stakeRequired >= MIN_STAKE
-      ? Math.min(100, 20 + Math.log10(stakeRequired / MIN_STAKE) * 20)
-      : Math.max(0, (stakeRequired / MIN_STAKE) * 20);
+    stakeRequired >= effectiveMinStake
+      ? Math.min(100, 20 + Math.log10(stakeRequired / effectiveMinStake) * 20)
+      : Math.max(0, (stakeRequired / effectiveMinStake) * 20);
 
   // Revenue consistency: absolute track record (log scale).
   // 100 BOT revenue = 30, 1,000 = 45, 10,000 = 60, 1M = 90.

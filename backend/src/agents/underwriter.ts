@@ -27,12 +27,19 @@ export class UnderwriterAgent {
       }
 
       // --- REAL inputs, all read from on-chain state ---
-      const finalScore = scoreNode({
-        uptimePct: Number(node.uptimePercentage) / 100,
-        nodeType: Number(node.nodeType),
-        stakeRequired: Number(node.stakeRequired) / 1e18,
-        revenueGenerated: Number(node.revenueGenerated) / 1e18,
-      });
+      // minStake comes from the deployed contract (testnet 10 BOT, mainnet 0.5 BOT)
+      const minStake =
+        Number(await contracts.nodeRegistry.read.minStake()) / 1e18;
+
+      const finalScore = scoreNode(
+        {
+          uptimePct: Number(node.uptimePercentage) / 100,
+          nodeType: Number(node.nodeType),
+          stakeRequired: Number(node.stakeRequired) / 1e18,
+          revenueGenerated: Number(node.revenueGenerated) / 1e18,
+        },
+        minStake
+      );
 
       scores[nodeAddr] = finalScore;
 

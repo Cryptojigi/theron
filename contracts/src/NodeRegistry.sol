@@ -15,7 +15,7 @@ contract NodeRegistry is AccessControl, INodeRegistry {
     mapping(address => Node) public nodes;
     address[] public nodeList;
 
-    uint256 public constant MIN_STAKE = 100 ether; // 100 BOT
+    uint256 public minStake; // set at deploy time (testnet 10 BOT, mainnet 0.5 BOT)
     IYieldDistributor public yieldDistributor;
 
     event NodeRegistered(address indexed nodeAddr, address indexed operator, uint8 nodeType);
@@ -25,7 +25,9 @@ contract NodeRegistry is AccessControl, INodeRegistry {
     event NodeDeactivated(address indexed nodeAddr);
     event YieldDistributorUpdated(address indexed newDistributor);
 
-    constructor() {
+    constructor(uint256 _minStake) {
+        require(_minStake > 0, "Stake must be > 0");
+        minStake = _minStake;
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }
 
@@ -42,7 +44,7 @@ contract NodeRegistry is AccessControl, INodeRegistry {
         string calldata hardwareSpecsURI,
         uint8 nodeType
     ) external payable {
-        require(msg.value >= MIN_STAKE, "Insufficient stake");
+        require(msg.value >= minStake, "Insufficient stake");
         require(nodes[nodeAddr].operator == address(0), "Node already registered");
 
         nodes[nodeAddr] = Node({
