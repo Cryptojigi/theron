@@ -1,0 +1,59 @@
+name: Deploy to Oracle VM
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install frontend deps
+        run: npm ci
+
+      - name: Build frontend
+        env:
+          NEXT_PUBLIC_API_URL: ${{ vars.NEXT_PUBLIC_API_URL }}
+          NEXT_PUBLIC_CHAIN_ID: ${{ vars.NEXT_PUBLIC_CHAIN_ID }}
+          NEXT_PUBLIC_WBOT_ADDRESS: ${{ vars.NEXT_PUBLIC_WBOT_ADDRESS }}
+          NEXT_PUBLIC_THERON_FUND_ADDRESS: ${{ vars.NEXT_PUBLIC_THERON_FUND_ADDRESS }}
+          NEXT_PUBLIC_THERON_TOKEN_ADDRESS: ${{ vars.NEXT_PUBLIC_THERON_TOKEN_ADDRESS }}
+          NEXT_PUBLIC_NODE_REGISTRY_ADDRESS: ${{ vars.NEXT_PUBLIC_NODE_REGISTRY_ADDRESS }}
+          NEXT_PUBLIC_RESTAKING_ADDRESS: ${{ vars.NEXT_PUBLIC_RESTAKING_ADDRESS }}
+          NEXT_PUBLIC_YIELD_DISTRIBUTOR_ADDRESS: ${{ vars.NEXT_PUBLIC_YIELD_DISTRIBUTOR_ADDRESS }}
+          NEXT_PUBLIC_AI_SIGNATURE_REGISTRY_ADDRESS: ${{ vars.NEXT_PUBLIC_AI_SIGNATURE_REGISTRY_ADDRESS }}
+        run: npm run build
+
+      - name: Build backend
+        working-directory: backend
+        run: |
+          npm ci
+          npm run build
+
+      - name: Deploy to Oracle VM
+        env:
+          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+          VM_HOST: 145.241.206.217
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$DEPLOY_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          SSH="ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no"
+          # Frontend: fresh build (full replace), code files, public assets
+          rsync -az --delete -e "$SSH" .next/ ubuntu@$VM_HOST:~/theron-frontend/.next/
+          rsync -az -e "$SSH" next.config.ts package.json package-lock.json public/ ubuntu@$VM_HOST:~/theron-frontend/
+          # Backend: source + compiled output; env and node_modules stay untouched on the VM
+          rsync -az --delete -e "$SSH" --exclude node_modules --exclude '.env*' backend/ ubuntu@$VM_HOST:~/theron-backend/
+          # Refresh backend prod deps, restart both services
+          $SSH ubuntu@$VM_HOST "cd ~/theron-backend && npm ci --omit=dev > /dev/null 2>&1 && sudo /usr/bin/systemctl restart theron-backend.service && sudo /usr/bin/systemctl restart theron-frontend.service"
+          sleep 6
+          curl -sf -o /dev/null -w "LIVE CHECK: HTTP %{http_code}\n" http://$VM_HOST/ || echo "LIVE CHECK FAILED"
