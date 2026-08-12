@@ -3,7 +3,7 @@
 import { useState } from "react";
 import AppShell from "@/components/AppShell";
 import { useFundStats, useNodes, usePortfolio } from "@/lib/hooks";
-import { useAccount, useBalance, useWriteContract } from "wagmi";
+import { useAccount, useBalance, useChainId, useSwitchChain, useWriteContract } from "wagmi";
 import { waitForTransactionReceipt } from "wagmi/actions";
 import { wagmiConfig } from "@/lib/wagmi";
 import { contracts } from "@/lib/contracts";
@@ -12,7 +12,9 @@ import { parseEther } from "viem";
 export default function FundPage() {
   const { data: stats, isLoading: statsLoading, error: statsError } = useFundStats();
   const { data: nodes } = useNodes();
-  const { address, isConnected, chainId } = useAccount();
+  const { address, isConnected } = useAccount();
+  const chainId = useChainId();
+  const { switchChain } = useSwitchChain();
   const { data: balanceData } = useBalance({ address });
   const { data: portfolio } = usePortfolio(address);
 
@@ -39,7 +41,7 @@ export default function FundPage() {
   let guard: string | null = null;
   if (!isConnected) guard = "Connect your wallet first";
   else if (isWrongNetwork)
-    guard = "Wrong network — switch to BOT Chain Testnet (chain 968) in your wallet";
+    guard = `Wrong network — your wallet reports chain ID ${chainId ?? "unknown"} (needs 968)`;
   else if (!amount || isNaN(amountNum) || amountNum <= 0) guard = "Enter an amount";
   else if (action === "Deposit" && amountNum > botBalance)
     guard = `Insufficient BOT balance — you have ${botBalance.toFixed(4)} BOT`;
@@ -144,7 +146,7 @@ export default function FundPage() {
                 </span>
                 <span className={`flex items-center gap-1.5 ${isWrongNetwork ? "text-red-400" : "text-accent"}`}>
                   <span className={`w-1.5 h-1.5 rounded-full ${isWrongNetwork ? "bg-red-500" : "bg-accent"}`} />
-                  {isWrongNetwork ? "Wrong network" : "Chain 968"}
+                  {isWrongNetwork ? `Chain ${chainId} — wrong` : "Chain 968"}
                 </span>
               </div>
             )}
@@ -168,6 +170,14 @@ export default function FundPage() {
             {guard && (
               <div className="mt-3 text-xs text-red-400 bg-red-500/10 border border-red-500/20 px-3 py-2 rounded-lg">
                 {guard}
+                {isWrongNetwork && (
+                  <button
+                    onClick={() => switchChain({ chainId: 968 })}
+                    className="mt-2 w-full bg-accent text-black text-xs font-medium px-3 py-2 btn hover:opacity-90 transition-opacity"
+                  >
+                    Switch to BOT Chain Testnet (968)
+                  </button>
+                )}
               </div>
             )}
             {txError && (
