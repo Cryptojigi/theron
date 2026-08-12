@@ -3,9 +3,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ConnectModal from "@/components/ConnectModal";
-import { useAccount, useDisconnect } from "wagmi";
+import { useAccount, useDisconnect, useSwitchChain } from "wagmi";
 
 /* ── Inline SVG icons (outline style, 20×20) ── */
 const Icons = {
@@ -66,8 +66,21 @@ const navItems = [
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [walletOpen, setWalletOpen] = useState(false);
-  const { address, isConnected } = useAccount();
+  const { address, isConnected, chainId } = useAccount();
   const { disconnect } = useDisconnect();
+  const { switchChain } = useSwitchChain();
+
+  // Auto-switch: if a wallet connects on the wrong network (e.g. mainnet),
+  // ask it to switch/add BOT Chain Testnet (968) — with the user's approval.
+  useEffect(() => {
+    if (isConnected && chainId && chainId !== 968) {
+      try {
+        switchChain({ chainId: 968 });
+      } catch {
+        /* user declined — they can switch manually */
+      }
+    }
+  }, [isConnected, chainId, switchChain]);
 
   return (
     <div className="min-h-screen flex flex-col lg:flex-row">
