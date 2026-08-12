@@ -142,6 +142,7 @@ export default function FundPage() {
                   onClick={() => {
                     setAction(t);
                     setAttempted(false);
+                    setAmount(""); // different units per tab (BOT vs TRN) — start fresh
                   }}
                   className={`px-4 py-2 text-sm btn border ${
                     action === t
