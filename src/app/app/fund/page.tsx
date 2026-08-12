@@ -24,6 +24,7 @@ export default function FundPage() {
   const [stepMsg, setStepMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
   const [txError, setTxError] = useState("");
+  const [attempted, setAttempted] = useState(false);
 
   const { writeContractAsync } = useWriteContract();
 
@@ -42,14 +43,18 @@ export default function FundPage() {
   if (!isConnected) guard = "Connect your wallet first";
   else if (isWrongNetwork)
     guard = `Wrong network — your wallet reports chain ID ${chainId ?? "unknown"} (needs 968)`;
-  else if (!amount || isNaN(amountNum) || amountNum <= 0) guard = "Enter an amount";
+  else if (attempted && (!amount || isNaN(amountNum) || amountNum <= 0))
+    guard = "Enter an amount";
   else if (action === "Deposit" && amountNum > botBalance)
     guard = `Insufficient BOT balance — you have ${botBalance.toFixed(4)} BOT`;
   else if (action === "Withdraw" && amountNum > trnBalance)
     guard = `Insufficient TRN balance — you have ${trnBalance.toFixed(4)} TRN`;
 
   const handleTx = async () => {
-    if (!amount || isNaN(Number(amount))) return;
+    if (!amount || isNaN(Number(amount)) || Number(amount) <= 0) {
+      setAttempted(true);
+      return;
+    }
     const parsedAmount = parseEther(amount);
 
     setIsWorking(true);
@@ -123,7 +128,10 @@ export default function FundPage() {
               {(["Deposit", "Withdraw"] as const).map((t) => (
                 <button
                   key={t}
-                  onClick={() => setAction(t)}
+                  onClick={() => {
+                    setAction(t);
+                    setAttempted(false);
+                  }}
                   className={`px-4 py-2 text-sm btn border ${
                     action === t
                       ? "bg-accent text-black border-accent"
@@ -154,7 +162,10 @@ export default function FundPage() {
               <input
                 type="text"
                 value={amount}
-                onChange={(e) => setAmount(e.target.value)}
+                onChange={(e) => {
+                  setAmount(e.target.value);
+                  setAttempted(false);
+                }}
                 placeholder={action === "Deposit" ? "0.0 BOT" : "0.0 TRN (Shares)"}
                 className="flex-1 bg-surface-2 border border-border px-4 py-3 text-sm text-text placeholder:text-dim focus:outline-none focus:border-accent transition-colors"
                 disabled={isWorking}
