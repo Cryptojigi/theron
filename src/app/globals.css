@@ -4,8 +4,8 @@
   --bg: #0D0D0D;
   --surface: #141414;
   --surface-2: #1C1C1C;
-  --primary: #0000EE;
-  --primary-hover: #3333FF;
+  --primary: #3E55C8;
+  --primary-hover: #5269DA;
   --accent: #FFA800;
   --accent-soft: rgba(255, 168, 0, 0.12);
   --text: #FFFFFF;
@@ -72,4 +72,24 @@ body {
 }
 .btn {
   border-radius: 4px;
+}
+
+/* Loading skeleton shimmer */
+@keyframes shimmer {
+  0% {
+    background-position: -400px 0;
+  }
+  100% {
+    background-position: 400px 0;
+  }
+}
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.04) 25%,
+    rgba(255, 255, 255, 0.11) 50%,
+    rgba(255, 255, 255, 0.04) 75%
+  );
+  background-size: 800px 100%;
+  animation: shimmer 1.6s infinite linear;
 }

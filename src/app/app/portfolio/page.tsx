@@ -1,6 +1,7 @@
 "use client";
 
 import AppShell from "@/components/AppShell";
+import Skeleton from "@/components/Skeleton";
 import { usePortfolio } from "@/lib/hooks";
 import { useAccount } from "wagmi";
 
@@ -33,16 +34,19 @@ export default function PortfolioPage() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         <Summary 
           label="TRN Balance" 
-          value={isLoading ? "..." : `${portfolio?.balance?.toLocaleString() || 0} TRN`} 
+          value={`${portfolio?.balance?.toLocaleString() || 0} TRN`} 
           accent 
+          loading={isLoading}
         />
         <Summary 
           label="Value in BOT" 
-          value={isLoading ? "..." : `${portfolio?.valueInBOT?.toFixed(4) || "0.00"} BOT`} 
+          value={`${portfolio?.valueInBOT?.toFixed(4) || "0.00"} BOT`} 
+          loading={isLoading}
         />
         <Summary 
           label="Restaked TRN" 
-          value={isLoading ? "..." : `${portfolio?.restaked?.toLocaleString() || 0} TRN`} 
+          value={`${portfolio?.restaked?.toLocaleString() || 0} TRN`} 
+          loading={isLoading}
         />
         <Summary 
           label="TRN Price" 
@@ -57,11 +61,15 @@ export default function PortfolioPage() {
   );
 }
 
-function Summary({ label, value, accent }: { label: string; value: string; accent?: boolean }) {
+function Summary({ label, value, loading, accent }: { label: string; value: string; loading?: boolean; accent?: boolean }) {
   return (
     <div className="border border-border bg-surface p-5">
       <div className="text-xs text-dim mb-1.5">{label}</div>
-      <div className={`font-display text-lg sm:text-xl ${accent ? "text-accent" : "text-text"}`}>{value}</div>
+      {loading ? (
+        <Skeleton className="h-6 w-20" />
+      ) : (
+        <div className={`font-display text-lg sm:text-xl ${accent ? "text-accent" : "text-text"}`}>{value}</div>
+      )}
     </div>
   );
 }

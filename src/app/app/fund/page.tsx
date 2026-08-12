@@ -8,6 +8,7 @@ import { waitForTransactionReceipt } from "wagmi/actions";
 import { wagmiConfig } from "@/lib/wagmi";
 import { contracts } from "@/lib/contracts";
 import { parseEther } from "viem";
+import Skeleton from "@/components/Skeleton";
 
 export default function FundPage() {
   const { data: stats, isLoading: statsLoading, error: statsError } = useFundStats();
@@ -25,6 +26,7 @@ export default function FundPage() {
   const [successMsg, setSuccessMsg] = useState("");
   const [txError, setTxError] = useState("");
   const [attempted, setAttempted] = useState(false);
+  const [inputFocused, setInputFocused] = useState(false);
 
   const { writeContractAsync } = useWriteContract();
 
@@ -100,6 +102,16 @@ export default function FundPage() {
     }
   };
 
+  // MAX button: fills the input with the full available amount
+  // (BOT balance for deposits, TRN balance for withdrawals). Rounds DOWN
+  // so it never exceeds the real balance.
+  const showMax = inputFocused || amount.trim() !== "";
+  const fillMax = () => {
+    const max = action === "Deposit" ? botBalance : trnBalance;
+    setAmount(String(Math.floor(max * 1e4) / 1e4));
+    setAttempted(false);
+  };
+
   return (
     <AppShell>
       <h1 className="font-display text-2xl text-text mb-6">Fund Dashboard</h1>
@@ -110,12 +122,11 @@ export default function FundPage() {
         </div>
       ) : null}
 
-      {/* Stat cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <StatCard label="Net Asset Value" value={statsLoading ? "..." : `$${stats?.nav?.toFixed(3) || "1.000"}`} />
-        <StatCard label="TVL" value={statsLoading ? "..." : `${stats?.tvl?.toLocaleString(undefined, { maximumFractionDigits: 0 }) || "0"} BOT`} accent />
-        <StatCard label="APY" value={statsLoading ? "..." : "n/a"} accent />
-        <StatCard label="Yield / block" value={statsLoading ? "..." : `${stats?.yieldPerBlock || 0} BOT`} mono />
+        <StatCard label="Net Asset Value" value={`$${stats?.nav?.toFixed(3) || "1.000"}`} loading={statsLoading} />
+        <StatCard label="TVL" value={`${stats?.tvl?.toLocaleString(undefined, { maximumFractionDigits: 0 }) || "0"} BOT`} accent loading={statsLoading} />
+        <StatCard label="APY" value="n/a" accent loading={statsLoading} />
+        <StatCard label="Yield / block" value={`${stats?.yieldPerBlock || 0} BOT`} mono loading={statsLoading} />
       </div>
 
       <div className="grid lg:grid-cols-3 gap-8">
@@ -143,33 +154,40 @@ export default function FundPage() {
               ))}
             </div>
             {isConnected && (
-              <div className="flex items-center justify-between mb-3 text-xs">
-                <span className="text-dim">
-                  {action === "Deposit" ? "Balance" : "Your TRN"}:
-                  <span className="font-mono text-text ml-1">
-                    {action === "Deposit"
-                      ? `${botBalance.toFixed(4)} BOT`
-                      : `${trnBalance.toFixed(4)} TRN`}
-                  </span>
-                </span>
-                <span className={`flex items-center gap-1.5 ${isWrongNetwork ? "text-red-400" : "text-accent"}`}>
-                  <span className={`w-1.5 h-1.5 rounded-full ${isWrongNetwork ? "bg-red-500" : "bg-accent"}`} />
-                  {isWrongNetwork ? `Chain ${chainId} — wrong` : "Chain 968"}
+              <div className="mb-3 text-xs text-dim">
+                {action === "Deposit" ? "Balance" : "Your TRN"}:
+                <span className="font-mono text-text ml-1">
+                  {action === "Deposit"
+                    ? `${botBalance.toFixed(4)} BOT`
+                    : `${trnBalance.toFixed(4)} TRN`}
                 </span>
               </div>
             )}
             <div className="flex flex-col sm:flex-row gap-3">
-              <input
-                type="text"
-                value={amount}
-                onChange={(e) => {
-                  setAmount(e.target.value);
-                  setAttempted(false);
-                }}
-                placeholder={action === "Deposit" ? "0.0 BOT" : "0.0 TRN (Shares)"}
-                className="flex-1 bg-surface-2 border border-border px-4 py-3 text-sm text-text placeholder:text-dim focus:outline-none focus:border-accent transition-colors"
-                disabled={isWorking}
-              />
+              <div className="relative flex-1">
+                <input
+                  type="text"
+                  value={amount}
+                  onChange={(e) => {
+                    setAmount(e.target.value);
+                    setAttempted(false);
+                  }}
+                  onFocus={() => setInputFocused(true)}
+                  onBlur={() => setInputFocused(false)}
+                  placeholder={action === "Deposit" ? "0.0 BOT" : "0.0 TRN (Shares)"}
+                  className="w-full bg-surface-2 border border-border px-4 py-3 pr-14 text-sm text-text placeholder:text-dim focus:outline-none focus:border-accent transition-colors"
+                  disabled={isWorking}
+                />
+                {showMax && (
+                  <button
+                    type="button"
+                    onClick={fillMax}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 text-[11px] font-mono text-accent border border-accent/40 hover:bg-accent/10 px-2 py-0.5 rounded transition-colors"
+                  >
+                    MAX
+                  </button>
+                )}
+              </div>
               <button 
                 onClick={handleTx}
                 disabled={isWorking || !!guard}
@@ -237,7 +255,9 @@ export default function FundPage() {
                 <span className="w-1.5 h-1.5 bg-accent animate-pulse" /> STREAMING
               </span>
             </div>
-            <div className="font-display text-3xl text-accent mb-2">+{stats?.yieldPerBlock || 0} BOT</div>
+            <div className="font-display text-3xl text-accent mb-2">
+              {statsLoading ? <Skeleton className="h-8 w-24" /> : `+${stats?.yieldPerBlock || 0} BOT`}
+            </div>
             <p className="text-xs text-dim">earned in the last block (0.75s)</p>
             <div className="mt-5 pt-4 border-t border-border space-y-2 text-sm">
               <Row label="Your TRN" value={portfolio?.balance?.toString() || "0.00"} mono />
@@ -261,11 +281,15 @@ export default function FundPage() {
   );
 }
 
-function StatCard({ label, value, accent, mono }: { label: string; value: string; accent?: boolean; mono?: boolean }) {
+function StatCard({ label, value, loading, accent, mono }: { label: string; value: string; loading?: boolean; accent?: boolean; mono?: boolean }) {
   return (
     <div className="border border-border bg-surface p-5">
       <div className={`text-xs text-dim mb-1.5 ${mono ? "font-mono" : ""}`}>{label}</div>
-      <div className={`font-display text-xl sm:text-2xl ${accent ? "text-accent" : "text-text"}`}>{value}</div>
+      {loading ? (
+        <Skeleton className="h-7 w-24" />
+      ) : (
+        <div className={`font-display text-xl sm:text-2xl ${accent ? "text-accent" : "text-text"}`}>{value}</div>
+      )}
     </div>
   );
 }
