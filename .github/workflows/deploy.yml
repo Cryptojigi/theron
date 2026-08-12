@@ -49,7 +49,8 @@ jobs:
           chmod 600 ~/.ssh/deploy_key
           SSH="ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no"
           # Frontend: fresh build (full replace), code files, public assets
-          rsync -az --delete -e "$SSH" .next/ ubuntu@$VM_HOST:~/theron-frontend/.next/
+          # .next/cache is runtime-owned (server runs as root) — exclude from sync
+          rsync -az --delete --exclude '.next/cache' -e "$SSH" .next/ ubuntu@$VM_HOST:~/theron-frontend/.next/
           rsync -az -e "$SSH" next.config.ts package.json package-lock.json public/ ubuntu@$VM_HOST:~/theron-frontend/
           # Backend: source + compiled output; env and node_modules stay untouched on the VM
           rsync -az --delete -e "$SSH" --exclude node_modules --exclude '.env*' backend/ ubuntu@$VM_HOST:~/theron-backend/
