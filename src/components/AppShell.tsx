@@ -5,7 +5,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import ConnectModal from "@/components/ConnectModal";
-import { useAccount } from "wagmi";
+import { useAccount, useDisconnect } from "wagmi";
 
 /* ── Inline SVG icons (outline style, 20×20) ── */
 const Icons = {
@@ -67,6 +67,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [walletOpen, setWalletOpen] = useState(false);
   const { address, isConnected } = useAccount();
+  const { disconnect } = useDisconnect();
 
   return (
     <div className="min-h-screen flex flex-col lg:flex-row">
@@ -123,16 +124,25 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         {/* Wallet footer */}
         <div className="px-4 py-5 border-t border-border space-y-3">
           {isConnected && address ? (
-            <div className="text-xs font-mono text-dim truncate px-1">
-              {address.slice(0, 6)}...{address.slice(-4)}
-            </div>
-          ) : null}
-          <button
-            onClick={() => setWalletOpen(true)}
-            className="w-full bg-accent text-black text-sm px-4 py-2.5 btn hover:opacity-90 transition-opacity font-medium"
-          >
-            {isConnected ? "Switch Account" : "Connect Wallet"}
-          </button>
+            <>
+              <div className="text-xs font-mono text-dim truncate px-1">
+                {address.slice(0, 6)}...{address.slice(-4)}
+              </div>
+              <button
+                onClick={() => disconnect()}
+                className="w-full border border-border text-muted text-sm px-4 py-2.5 btn hover:border-red-500/50 hover:bg-red-500/5 hover:text-red-400 transition-colors font-medium"
+              >
+                Disconnect
+              </button>
+            </>
+          ) : (
+            <button
+              onClick={() => setWalletOpen(true)}
+              className="w-full bg-accent text-black text-sm px-4 py-2.5 btn hover:opacity-90 transition-opacity font-medium"
+            >
+              Connect Wallet
+            </button>
+          )}
         </div>
       </aside>
 
@@ -149,12 +159,21 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
               priority
             />
           </Link>
-          <button
-            onClick={() => setWalletOpen(true)}
-            className="px-3 py-1.5 text-xs bg-accent text-black btn font-medium"
-          >
-            {isConnected && address ? `${address.slice(0, 6)}...` : "Connect"}
-          </button>
+          {isConnected && address ? (
+            <button
+              onClick={() => disconnect()}
+              className="px-3 py-1.5 text-xs border border-border text-text btn font-medium hover:border-red-500/50 hover:text-red-400 transition-colors"
+            >
+              Disconnect
+            </button>
+          ) : (
+            <button
+              onClick={() => setWalletOpen(true)}
+              className="px-3 py-1.5 text-xs bg-accent text-black btn font-medium"
+            >
+              Connect
+            </button>
+          )}
         </div>
       </div>
 
