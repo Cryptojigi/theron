@@ -3,7 +3,7 @@
 import { useState } from "react";
 import AppShell from "@/components/AppShell";
 import { useFundStats, useNodes, usePortfolio } from "@/lib/hooks";
-import { useAccount, useWriteContract } from "wagmi";
+import { useAccount, useBalance, useWriteContract } from "wagmi";
 import { waitForTransactionReceipt } from "wagmi/actions";
 import { wagmiConfig } from "@/lib/wagmi";
 import { contracts } from "@/lib/contracts";
@@ -12,7 +12,8 @@ import { parseEther } from "viem";
 export default function FundPage() {
   const { data: stats, isLoading: statsLoading, error: statsError } = useFundStats();
   const { data: nodes } = useNodes();
-  const { address } = useAccount();
+  const { address, isConnected, chainId } = useAccount();
+  const { data: balanceData } = useBalance({ address });
   const { data: portfolio } = usePortfolio(address);
 
   const [action, setAction] = useState<"Deposit" | "Withdraw">("Deposit");
@@ -20,11 +21,30 @@ export default function FundPage() {
   const [isWorking, setIsWorking] = useState(false);
   const [stepMsg, setStepMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
+  const [txError, setTxError] = useState("");
 
   const { writeContractAsync } = useWriteContract();
 
   const activeNodes = nodes?.filter(n => n.active).length || 0;
   const totalNodes = nodes?.length || 0;
+
+  // ── Network + balance guards (block bad txs before the wallet does) ──
+  const botBalance = balanceData
+    ? Number(balanceData.value) / 10 ** balanceData.decimals
+    : 0;
+  const trnBalance = Number(portfolio?.balance || 0);
+  const isWrongNetwork = isConnected && chainId !== 968;
+
+  const amountNum = Number(amount);
+  let guard: string | null = null;
+  if (!isConnected) guard = "Connect your wallet first";
+  else if (isWrongNetwork)
+    guard = "Wrong network — switch to BOT Chain Testnet (chain 968) in your wallet";
+  else if (!amount || isNaN(amountNum) || amountNum <= 0) guard = "Enter an amount";
+  else if (action === "Deposit" && amountNum > botBalance)
+    guard = `Insufficient BOT balance — you have ${botBalance.toFixed(4)} BOT`;
+  else if (action === "Withdraw" && amountNum > trnBalance)
+    guard = `Insufficient TRN balance — you have ${trnBalance.toFixed(4)} TRN`;
 
   const handleTx = async () => {
     if (!amount || isNaN(Number(amount))) return;
@@ -32,6 +52,7 @@ export default function FundPage() {
 
     setIsWorking(true);
     setSuccessMsg("");
+    setTxError("");
     try {
       if (action === "Deposit") {
         setStepMsg("Depositing BOT...");
@@ -63,8 +84,9 @@ export default function FundPage() {
       }
       setSuccessMsg("Transaction successful!");
       setAmount("");
-    } catch (e) {
+    } catch (e: any) {
       console.error(e);
+      setTxError(e?.shortMessage || e?.message || "Transaction failed");
     } finally {
       setIsWorking(false);
       setStepMsg("");
@@ -110,6 +132,22 @@ export default function FundPage() {
                 </button>
               ))}
             </div>
+            {isConnected && (
+              <div className="flex items-center justify-between mb-3 text-xs">
+                <span className="text-dim">
+                  {action === "Deposit" ? "Balance" : "Your TRN"}:
+                  <span className="font-mono text-text ml-1">
+                    {action === "Deposit"
+                      ? `${botBalance.toFixed(4)} BOT`
+                      : `${trnBalance.toFixed(4)} TRN`}
+                  </span>
+                </span>
+                <span className={`flex items-center gap-1.5 ${isWrongNetwork ? "text-red-400" : "text-accent"}`}>
+                  <span className={`w-1.5 h-1.5 rounded-full ${isWrongNetwork ? "bg-red-500" : "bg-accent"}`} />
+                  {isWrongNetwork ? "Wrong network" : "Chain 968"}
+                </span>
+              </div>
+            )}
             <div className="flex flex-col sm:flex-row gap-3">
               <input
                 type="text"
@@ -121,12 +159,22 @@ export default function FundPage() {
               />
               <button 
                 onClick={handleTx}
-                disabled={isWorking || !amount}
+                disabled={isWorking || !!guard}
                 className="bg-primary text-white px-6 py-3 btn hover:bg-primary-hover transition-colors text-sm whitespace-nowrap disabled:opacity-50"
               >
                 {isWorking ? stepMsg : action}
               </button>
             </div>
+            {guard && (
+              <div className="mt-3 text-xs text-red-400 bg-red-500/10 border border-red-500/20 px-3 py-2 rounded-lg">
+                {guard}
+              </div>
+            )}
+            {txError && (
+              <div className="mt-2 text-xs text-red-400 bg-red-500/10 border border-red-500/20 px-3 py-2 rounded-lg">
+                {txError}
+              </div>
+            )}
             <div className="mt-4 text-xs text-dim">
               {action === "Deposit" 
                 ? <>You will receive <span className="text-accent font-mono">TRN</span> at current NAV · Estimated gas: ~0.001 BOT</>
