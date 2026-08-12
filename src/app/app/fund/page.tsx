@@ -181,7 +181,12 @@ export default function FundPage() {
                 {showMax && (
                   <button
                     type="button"
-                    onClick={fillMax}
+                    onPointerDown={(e) => {
+                      // Fire before the input's blur hides this button (classic
+                      // unmount-before-click bug) — also keep the input focused.
+                      e.preventDefault();
+                      fillMax();
+                    }}
                     className="absolute right-2 top-1/2 -translate-y-1/2 text-[11px] font-mono text-accent border border-accent/40 hover:bg-accent/10 px-2 py-0.5 rounded transition-colors"
                   >
                     MAX
