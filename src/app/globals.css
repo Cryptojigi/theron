@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #0D0D0D;
+  --surface: #141414;
+  --surface-2: #1C1C1C;
+  --primary: #0000EE;
+  --primary-hover: #3333FF;
+  --accent: #FFA800;
+  --accent-soft: rgba(255, 168, 0, 0.12);
+  --text: #FFFFFF;
+  --text-muted: #A0A0A0;
+  --text-dim: #6B6B6B;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.14);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-text: var(--text);
+  --color-muted: var(--text-muted);
+  --color-dim: var(--text-dim);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --font-sans: "Aeonik Pro", system-ui, -apple-system, sans-serif;
+  --font-display: "Feature Deck", "Aeonik Pro", system-ui, sans-serif;
+  --font-mono: "Social Mono", ui-monospace, monospace;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-dim);
+}
+
+/* Utility: sharp corners for containers, subtle 4px for interactive elements */
+.card {
+  border-radius: 0;
+}
+.btn {
+  border-radius: 4px;
+}

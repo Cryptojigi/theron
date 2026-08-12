@@ -1,0 +1,35 @@
+{
+  "name": "theron-backend",
+  "version": "1.0.0",
+  "description": "Theron AI Agent Backend — Underwriter, Allocator, Rebalancer",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "dev": "ts-node src/index.ts",
+    "start": "node dist/index.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "keywords": [],
+  "author": "Theron",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "axios": "^1.19.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "openai": "^7.4.0",
+    "viem": "^2.55.13"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.2.0",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.23.12",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  }
+}

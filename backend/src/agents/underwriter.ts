@@ -1,0 +1,67 @@
+// Underwriter Agent — scores nodes using REAL on-chain data.
+// No hardcoded values: every input is read from the live contracts.
+import { getContracts, publicClient } from '../lib/contracts';
+import { generateNarrative } from '../lib/deepseek';
+import { keccak256, encodePacked, stringToHex } from 'viem';
+import type { TheronNode } from '../lib/types';
+import { scoreNode, isEligibleForAllocation } from '../lib/scoring';
+
+export class UnderwriterAgent {
+  async evaluateNodes() {
+    const contracts = getContracts();
+    const nodeCount = await contracts.nodeRegistry.read.getNodeCount();
+
+    const scores: Record<string, number> = {};
+
+    for (let i = 0; i < Number(nodeCount); i++) {
+      const nodeAddr = (await contracts.nodeRegistry.read.nodeList([
+        BigInt(i),
+      ])) as `0x${string}`;
+      const node = (await contracts.nodeRegistry.read.getNode([
+        nodeAddr,
+      ])) as TheronNode;
+
+      if (!node.active) {
+        scores[nodeAddr] = 0;
+        continue;
+      }
+
+      // --- REAL inputs, all read from on-chain state ---
+      const finalScore = scoreNode({
+        uptimePct: Number(node.uptimePercentage) / 100,
+        nodeType: Number(node.nodeType),
+        stakeRequired: Number(node.stakeRequired) / 1e18,
+        revenueGenerated: Number(node.revenueGenerated) / 1e18,
+      });
+
+      scores[nodeAddr] = finalScore;
+
+      const actionStr = `underwrite ${nodeAddr}`;
+      const details = `Scored node ${nodeAddr} with ${finalScore}/100. Uptime: ${(Number(node.uptimePercentage) / 100).toFixed(2)}%. Stake: ${Number(node.stakeRequired) / 1e18} BOT. Revenue: ${Number(node.revenueGenerated) / 1e18} BOT.`;
+      const summary = await generateNarrative(actionStr, details);
+
+      console.log(`Underwriter: ${nodeAddr} scored ${finalScore}. ${summary}`);
+
+      const intentHash = keccak256(
+        encodePacked(
+          ['string', 'address', 'uint256'],
+          ['underwrite', nodeAddr as `0x${string}`, BigInt(finalScore)]
+        )
+      );
+
+      try {
+        const tx = await contracts.aiSignatureRegistry.write.recordDecision([
+          intentHash,
+          'underwrite',
+          stringToHex(summary),
+        ]);
+        await publicClient.waitForTransactionReceipt({ hash: tx });
+        console.log(`Underwriter: Recorded on-chain (tx: ${tx})`);
+      } catch (e: any) {
+        console.error(`Underwriter tx failed: ${e.message.split('\n')[0]}`);
+      }
+    }
+
+    return scores;
+  }
+}
