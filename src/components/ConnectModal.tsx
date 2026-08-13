@@ -2,6 +2,7 @@
 
 import { useConnect, useDisconnect, useAccount } from "wagmi";
 import { useEffect, useState } from "react";
+import { clearWagmiStorage } from "@/lib/wagmi";
 
 /* ── Wallet metadata: display name ── */
 const WALLET_META: Record<string, { name: string; mobile?: boolean }> = {
