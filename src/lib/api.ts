@@ -27,6 +27,10 @@ export interface Portfolio {
   balance: number;
   valueInBOT: number;
   restaked: number;
+  restakeBoost?: number;
+  restakeLocked?: boolean;
+  restakeUnlockBlock?: number;
+  restakeBoostedValue?: number;
 }
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';

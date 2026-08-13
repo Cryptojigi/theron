@@ -201,7 +201,13 @@ export default function RestakePage() {
               <PositionRow 
                 label="Restaked" 
                 value={`${portfolio?.restaked?.toLocaleString() || "0"} TRN`} 
-                sub="Boosted yield" 
+                sub={
+                  portfolio?.restaked
+                    ? portfolio.restakeLocked
+                      ? `Locked until block ${portfolio.restakeUnlockBlock}`
+                      : "Unlockable now — unstake anytime"
+                    : "Boosted yield"
+                }
                 accent 
               />
             </div>

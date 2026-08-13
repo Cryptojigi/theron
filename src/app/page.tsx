@@ -180,19 +180,19 @@ function Hero() {
 function ProblemBand() {
   return (
     <section className="py-24 border-b border-border">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
         <FadeIn>
           <p className="text-sm font-mono text-accent mb-4 tracking-widest">THE PROBLEM</p>
-          <h2 className="font-display text-3xl sm:text-4xl text-text leading-tight max-w-3xl">
+          <h2 className="font-display text-3xl sm:text-4xl text-text leading-tight">
             Capital sits idle. Markets are slow. Human fund managers are slower.
           </h2>
-          <p className="mt-5 text-lg text-muted leading-relaxed max-w-3xl">
+          <p className="mt-6 text-lg text-muted leading-relaxed">
             The global compute economy — data centres, GPU clusters, edge nodes — generates
             consistent, measurable revenue around the clock. Yet most capital never reaches it.
             The barrier is complexity: evaluating operators, monitoring uptime, managing risk,
             rebalancing continuously. This is not a task built for human speed.
           </p>
-          <p className="mt-3 text-lg text-muted leading-relaxed max-w-3xl">
+          <p className="mt-4 text-lg text-muted leading-relaxed">
             Theron was engineered to close this gap. An AI that never sleeps, never hesitates,
             and never acts on anything other than verified on-chain data.
           </p>
@@ -418,21 +418,21 @@ function StatsBand() {
 
   return (
     <section className="py-24 border-b border-border">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6">
         <FadeIn className="text-center mb-14">
           <p className="text-sm font-mono text-accent tracking-widest mb-2">BY THE NUMBERS</p>
           <h2 className="font-display text-3xl sm:text-4xl text-text">Live metrics from the fund</h2>
         </FadeIn>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
           {[
-            { label: "Nodes online", value: <CountUp target={activeNodes} /> },
-            { label: "AI decisions made", value: <CountUp target={decisionsMade} /> },
-            { label: "Total value locked", value: <CountUp target={stats?.tvl || 0} suffix=" BOT" /> },
+            { label: "Nodes Online", value: <CountUp target={activeNodes} /> },
+            { label: "AI Decisions Made", value: <CountUp target={decisionsMade} /> },
+            { label: "Total Value Locked", value: <CountUp target={stats?.tvl || 0} suffix=" BOT" /> },
             { label: "Fund APY", value: <span>n/a</span> },
           ].map((s, i) => (
-            <FadeIn key={s.label} delay={i * 0.08}>
+            <FadeIn key={s.label} delay={i * 0.08} className="text-center">
               <div className="font-display text-4xl sm:text-5xl text-text">{s.value}</div>
-              <div className="text-xs text-dim mt-2 uppercase tracking-wider">{s.label}</div>
+              <div className="text-xs text-dim mt-2 uppercase tracking-wider font-mono">{s.label}</div>
             </FadeIn>
           ))}
         </div>

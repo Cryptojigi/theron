@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { getContracts } from '../lib/contracts';
+import { getContracts, publicClient } from '../lib/contracts';
 import { formatEther, hexToString, getAddress, isAddress } from 'viem';
 import { config } from '../config';
 
@@ -91,11 +91,30 @@ app.get('/api/portfolio/:address', async (req, res) => {
       balance as bigint,
     ]);
 
+    // REAL restake position from the Restaking contract (was hardcoded 0 —
+    // that made restaked TRN "vanish" from the UI even though it was safe)
+    const pos = (await contracts.restaking.read.positions([addr])) as [
+      bigint,
+      bigint,
+      bigint,
+      bigint,
+    ]; // [amount, lockPeriod, boostMultiplier, startBlock]
+    const restaked = Number(formatEther(pos[0]));
+    const unlockBlock = Number(pos[1]) + Number(pos[3]);
+    const currentBlock = Number(await publicClient.getBlockNumber());
+    const boosted = (await contracts.restaking.read.getBoostedBalance([
+      addr,
+    ])) as bigint;
+
     res.json({
       address: addr,
       balance: Number(formatEther(balance as bigint)),
       valueInBOT: Number(formatEther(assets as bigint)),
-      restaked: 0, // exposed once a per-user restake view exists
+      restaked,
+      restakeBoost: Number(pos[2]),
+      restakeLocked: currentBlock < unlockBlock,
+      restakeUnlockBlock: unlockBlock,
+      restakeBoostedValue: Number(formatEther(boosted)),
     });
   } catch (e: any) {
     res.status(500).json({ error: e.message });
