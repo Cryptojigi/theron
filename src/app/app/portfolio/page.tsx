@@ -2,12 +2,13 @@
 
 import AppShell from "@/components/AppShell";
 import Skeleton from "@/components/Skeleton";
-import { usePortfolio } from "@/lib/hooks";
+import { usePortfolio, useFundStats } from "@/lib/hooks";
 import { useAccount } from "wagmi";
 
 export default function PortfolioPage() {
   const { address, isConnected } = useAccount();
   const { data: portfolio, isLoading, error } = usePortfolio(address);
+  const { data: stats, isLoading: statsLoading } = useFundStats();
 
   if (!isConnected) {
     return (
@@ -50,7 +51,8 @@ export default function PortfolioPage() {
         />
         <Summary 
           label="TRN Price" 
-          value="$1.000" 
+          value={stats?.trnPrice ? `$${stats.trnPrice.toFixed(2)}` : "—"} 
+          loading={statsLoading}
         />
       </div>
 

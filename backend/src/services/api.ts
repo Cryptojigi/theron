@@ -8,16 +8,47 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Real BOT/USD price from the chain's own explorer API (cached 60s)
+let botPriceCache: { price: number; at: number } | null = null;
+async function getBotPrice(): Promise<number> {
+  if (botPriceCache && Date.now() - botPriceCache.at < 60_000) {
+    return botPriceCache.price;
+  }
+  try {
+    const res = await fetch('https://scan.bohr.life/api/v2/stats', {
+      signal: AbortSignal.timeout(8000),
+    });
+    const d: any = await res.json();
+    const price = Number(d.coin_price);
+    if (price > 0) {
+      botPriceCache = { price, at: Date.now() };
+      return price;
+    }
+  } catch {
+    /* fall through to stale cache / 0 */
+  }
+  return botPriceCache?.price ?? 0;
+}
+
 app.get('/api/fund/stats', async (_req, res) => {
   try {
     const contracts = getContracts();
     const tvl = await contracts.theronToken.read.totalAssets();
+    const supply = await contracts.theronToken.read.totalSupply();
+
+    // Real NAV (BOT per share) from vault math: assets ÷ shares
+    const tvlNum = Number(formatEther(tvl as bigint));
+    const supplyNum = Number(formatEther(supply as bigint));
+    const nav = supplyNum > 0 ? tvlNum / supplyNum : 1.0;
+
+    const botPrice = await getBotPrice();
 
     res.json({
-      tvl: Number(formatEther(tvl as bigint)),
-      nav: 1.0,
-      trnPrice: 1.0,
-      apy: 0, // APY computed on frontend from historical data
+      tvl: tvlNum,
+      nav,
+      trnPrice: nav * botPrice, // real USD value of 1 TRN
+      botPrice,
+      apy: 0, // no yield accrued yet — honest zero
       yieldPerBlock: 0,
     });
   } catch (e: any) {

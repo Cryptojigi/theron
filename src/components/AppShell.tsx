@@ -60,7 +60,7 @@ const navItems = [
   { href: "/app/decisions", label: "AI Log" },
   { href: "/app/restake", label: "Restake" },
   { href: "/app/portfolio", label: "Portfolio" },
-  { href: "/app/governance", label: "Governance" },
+  { href: "/app/governance", label: "Governance", soon: true },
 ];
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
@@ -129,6 +129,11 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                   {icon}
                 </span>
                 {item.label}
+                {item.soon && (
+                  <span className="ml-auto text-[9px] font-mono px-1.5 py-0.5 border border-accent/40 text-accent rounded">
+                    SOON
+                  </span>
+                )}
               </Link>
             );
           })}

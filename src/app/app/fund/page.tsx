@@ -123,7 +123,7 @@ export default function FundPage() {
       ) : null}
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <StatCard label="Net Asset Value" value={`$${stats?.nav?.toFixed(3) || "1.000"}`} loading={statsLoading} />
+        <StatCard label="Net Asset Value" value={`${stats?.nav?.toFixed(3) || "1.000"} BOT`} loading={statsLoading} />
         <StatCard label="TVL" value={`${stats?.tvl?.toLocaleString(undefined, { maximumFractionDigits: 0 }) || "0"} BOT`} accent loading={statsLoading} />
         <StatCard label="APY" value="n/a" accent loading={statsLoading} />
         <StatCard label="Yield / block" value={`${stats?.yieldPerBlock || 0} BOT`} mono loading={statsLoading} />
@@ -267,7 +267,7 @@ export default function FundPage() {
             <p className="text-xs text-dim">earned in the last block (0.75s)</p>
             <div className="mt-5 pt-4 border-t border-border space-y-2 text-sm">
               <Row label="Your TRN" value={portfolio?.balance?.toString() || "0.00"} mono />
-              <Row label="TRN price" value="$1.000" mono />
+              <Row label="TRN price" value={stats?.trnPrice ? `$${stats.trnPrice.toFixed(2)}` : "—"} mono />
               <Row label="Value in BOT" value={`${portfolio?.valueInBOT?.toString() || "0.00"} BOT`} accent mono />
             </div>
           </div>
