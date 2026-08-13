@@ -19,6 +19,13 @@ export default function RestakePage() {
   const [isWorking, setIsWorking] = useState(false);
   const [stepMsg, setStepMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
+  const [txError, setTxError] = useState("");
+
+  const availableTrn = Number(portfolio?.balance || 0);
+  const amountNum = Number(amount);
+  const amountInvalid = !amount || isNaN(amountNum) || amountNum <= 0;
+  const amountTooHigh = !amountInvalid && amountNum > availableTrn;
+  const restakeBlocked = amountInvalid || amountTooHigh;
 
   // Read block constants from contract
   const { data: blocks30 } = useReadContract({
@@ -54,6 +61,7 @@ export default function RestakePage() {
     
     setIsWorking(true);
     setSuccessMsg("");
+    setTxError("");
     try {
       setStepMsg("Approving TRN...");
       const approveHash = await writeContractAsync({
@@ -75,8 +83,9 @@ export default function RestakePage() {
       
       setSuccessMsg("Restake successful!");
       setAmount("");
-    } catch (e) {
+    } catch (e: any) {
       console.error(e);
+      setTxError(e?.shortMessage || e?.message || "Transaction failed");
     } finally {
       setIsWorking(false);
       setStepMsg("");
@@ -86,6 +95,7 @@ export default function RestakePage() {
   const handleUnstake = async () => {
     setIsWorking(true);
     setSuccessMsg("");
+    setTxError("");
     try {
       setStepMsg("Unstaking TRN...");
       const hash = await writeContractAsync({
@@ -95,8 +105,9 @@ export default function RestakePage() {
       });
       await waitForTransactionReceipt(wagmiConfig, { hash });
       setSuccessMsg("Unstake successful!");
-    } catch (e) {
+    } catch (e: any) {
       console.error(e);
+      setTxError(e?.shortMessage || e?.message || "Transaction failed");
     } finally {
       setIsWorking(false);
       setStepMsg("");
@@ -171,7 +182,7 @@ export default function RestakePage() {
           <div className="flex gap-2">
             <button 
               onClick={handleRestake}
-              disabled={isWorking || !amount}
+              disabled={isWorking || restakeBlocked}
               className="flex-1 bg-accent text-black font-medium px-6 py-3 btn hover:opacity-90 transition-opacity text-sm disabled:opacity-50"
             >
               {isWorking && stepMsg.includes("Restake") ? stepMsg : "Restake"}
@@ -184,6 +195,16 @@ export default function RestakePage() {
               {isWorking && stepMsg.includes("Unstake") ? stepMsg : "Unstake"}
             </button>
           </div>
+          {amountTooHigh && (
+            <div className="mt-3 text-xs text-red-400 bg-red-500/10 border border-red-500/20 px-3 py-2 rounded-lg">
+              Amount exceeds your available TRN balance ({availableTrn} TRN)
+            </div>
+          )}
+          {txError && (
+            <div className="mt-3 text-xs text-red-400 bg-red-500/10 border border-red-500/20 px-3 py-2 rounded-lg">
+              {txError}
+            </div>
+          )}
           {isWorking && stepMsg.includes("Approve") && <div className="mt-4 text-xs text-dim">{stepMsg}</div>}
           {successMsg && <div className="mt-4 text-xs text-accent">{successMsg}</div>}
         </div>
