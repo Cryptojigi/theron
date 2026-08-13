@@ -31,6 +31,7 @@ export interface Portfolio {
   restakeLocked?: boolean;
   restakeUnlockBlock?: number;
   restakeBoostedValue?: number;
+  currentBlock?: number;
 }
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';

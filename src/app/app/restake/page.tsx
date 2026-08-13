@@ -27,6 +27,18 @@ export default function RestakePage() {
   const amountTooHigh = !amountInvalid && amountNum > availableTrn;
   const restakeBlocked = amountInvalid || amountTooHigh;
 
+  // Unstake facts: whole position, only after the lock ends
+  const hasPosition = !!portfolio?.restaked && portfolio.restaked > 0;
+  const isLocked = hasPosition && !!portfolio?.restakeLocked;
+  const unlockDate =
+    portfolio?.restakeUnlockBlock && portfolio?.currentBlock
+      ? new Date(
+          Date.now() +
+            (portfolio.restakeUnlockBlock - portfolio.currentBlock) * 680 // ~0.68s per block
+        )
+      : null;
+  const unstakeDisabled = isWorking || !hasPosition || isLocked;
+
   // Read block constants from contract
   const { data: blocks30 } = useReadContract({
     address: contracts.restaking.address,
@@ -129,7 +141,7 @@ export default function RestakePage() {
           <h2 className="font-display text-lg text-text mb-5">Restake your TRN</h2>
 
           <div className="mb-5">
-            <label className="text-xs text-dim mb-2 block">Amount (TRN)</label>
+            <label className="text-xs text-dim mb-2 block">Amount to restake (TRN)</label>
             <input
               type="text"
               value={amount}
@@ -139,7 +151,7 @@ export default function RestakePage() {
               disabled={isWorking}
             />
             <div className="text-xs text-dim mt-1.5">
-              Available: {portfolio?.balance?.toLocaleString() || "0"} TRN
+              Available: {availableTrn.toLocaleString()} TRN
             </div>
           </div>
 
@@ -189,12 +201,31 @@ export default function RestakePage() {
             </button>
             <button 
               onClick={handleUnstake}
-              disabled={isWorking}
+              disabled={unstakeDisabled}
               className="flex-1 border border-border text-text font-medium px-6 py-3 btn hover:bg-surface-2 transition-colors text-sm disabled:opacity-50"
             >
-              {isWorking && stepMsg.includes("Unstake") ? stepMsg : "Unstake"}
+              {!hasPosition
+                ? "No position"
+                : isLocked
+                ? "Locked"
+                : isWorking && stepMsg.includes("Unstake")
+                ? stepMsg
+                : "Unstake"}
             </button>
           </div>
+          {isLocked && unlockDate && (
+            <div className="mt-3 text-xs text-dim bg-surface-2 border border-border px-3 py-2 rounded-lg">
+              Your {portfolio?.restaked?.toLocaleString()} TRN unlock at block{" "}
+              <span className="font-mono text-text">{portfolio?.restakeUnlockBlock}</span> (
+              ~{unlockDate.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" })}).
+              Unstake becomes available after that — it releases your full position.
+            </div>
+          )}
+          {hasPosition && !isLocked && (
+            <div className="mt-3 text-xs text-dim">
+              Unstake releases your full position of {portfolio?.restaked?.toLocaleString()} TRN.
+            </div>
+          )}
           {amountTooHigh && (
             <div className="mt-3 text-xs text-red-400 bg-red-500/10 border border-red-500/20 px-3 py-2 rounded-lg">
               Amount exceeds your available TRN balance ({availableTrn} TRN)

@@ -115,6 +115,7 @@ app.get('/api/portfolio/:address', async (req, res) => {
       restakeLocked: currentBlock < unlockBlock,
       restakeUnlockBlock: unlockBlock,
       restakeBoostedValue: Number(formatEther(boosted)),
+      currentBlock,
     });
   } catch (e: any) {
     res.status(500).json({ error: e.message });
