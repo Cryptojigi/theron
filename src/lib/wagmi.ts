@@ -75,3 +75,18 @@ export const wagmiConfig = createConfig({
     [botChainTestnet.id]: http(),
   },
 });
+
+// Force-clear wagmi's persisted state so a disconnect is final — storage can't
+// resurrect the session (belt & braces on top of disconnect()).
+export function clearWagmiStorage() {
+  try {
+    const keys: string[] = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && (k.startsWith('wagmi.') || k.includes('.disconnected'))) keys.push(k);
+    }
+    keys.forEach((k) => localStorage.removeItem(k));
+  } catch {
+    /* storage unavailable — ignore */
+  }
+}

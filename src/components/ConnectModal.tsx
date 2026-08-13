@@ -86,7 +86,12 @@ export default function ConnectModal({
   };
 
   const handleDisconnect = () => {
-    disconnect();
+    try {
+      disconnect();
+    } catch {
+      /* state cleared below regardless */
+    }
+    clearWagmiStorage();
     onClose();
   };
 

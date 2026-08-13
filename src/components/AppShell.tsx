@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import ConnectModal from "@/components/ConnectModal";
 import { useAccount, useDisconnect, useSwitchChain } from "wagmi";
+import { clearWagmiStorage } from "@/lib/wagmi";
 
 /* ── Inline SVG icons (outline style, 20×20) ── */
 const Icons = {
@@ -147,7 +148,14 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                 {address.slice(0, 6)}...{address.slice(-4)}
               </div>
               <button
-                onClick={() => disconnect()}
+                onClick={() => {
+                  try {
+                    disconnect();
+                  } catch {
+                    /* state cleared below regardless */
+                  }
+                  clearWagmiStorage();
+                }}
                 className="w-full border border-border text-muted text-sm px-4 py-2.5 btn hover:border-red-500/50 hover:bg-red-500/5 hover:text-red-400 transition-colors font-medium"
               >
                 Disconnect
