@@ -74,6 +74,10 @@ export const wagmiConfig = createConfig({
   transports: {
     [botChainTestnet.id]: http(),
   },
+  // storage: null — no session persistence. Without it, wagmi re-hydrates the
+  // previous wallet session from localStorage on every page load (wallet
+  // "reconnects" on refresh) and disconnect can be resurrected by the shim.
+  storage: null,
 });
 
 // Force-clear wagmi's persisted state so a disconnect is final — storage can't

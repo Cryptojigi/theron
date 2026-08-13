@@ -110,7 +110,7 @@ export default function ConnectModal({
         </div>
 
         {/* Header */}
-        <div className="flex items-center justify-between px-5 pt-3 pb-3 sm:pt-4 border-b border-border">
+        <div className="flex items-center justify-between px-4 pt-2.5 pb-2.5 border-b border-border">
           <div>
             <p className="text-[10px] text-dim uppercase tracking-widest mb-0.5 font-mono">
               {isConnected ? "CONNECTED" : "CONNECT WALLET"}
@@ -124,11 +124,11 @@ export default function ConnectModal({
           </button>
         </div>
 
-        <div className="px-5 py-3">
+        <div className="px-4 py-2.5 max-h-[58vh] overflow-y-auto">
           {/* ── CONNECTED STATE ── */}
           {isConnected && address ? (
             <div className="space-y-4">
-              <div className="flex items-center gap-3 p-4 border border-accent/20 bg-accent/5 rounded-xl">
+              <div className="flex items-center gap-3 p-3 border border-accent/20 bg-accent/5 rounded-xl">
                 <span className="w-2 h-2 rounded-full bg-accent animate-pulse shrink-0" />
                 <div className="min-w-0">
                   <p className="text-xs text-dim font-mono mb-0.5">{activeConnector?.name}</p>
@@ -149,7 +149,7 @@ export default function ConnectModal({
             </div>
           ) : (
             /* ── WALLET LIST ── */
-            <div className="space-y-2">
+            <div className="space-y-1.5">
               {unique.map((connector) => {
                 const meta = WALLET_META[connector.name] || WALLET_META["Injected"];
                 const isInstalled = detectInstalled(connector.name);
@@ -160,7 +160,7 @@ export default function ConnectModal({
                     key={connector.uid}
                     onClick={() => handleConnect(connector)}
                     disabled={status === "pending"}
-                    className="w-full flex items-center gap-3 px-3 py-2.5 border border-border hover:border-accent hover:bg-surface-2 transition-all rounded-xl text-left group disabled:opacity-50"
+                    className="w-full flex items-center gap-3 px-3 py-2 border border-border hover:border-accent hover:bg-surface-2 transition-all rounded-xl text-left group disabled:opacity-50"
                   >
                     {/* Icon */}
                     <div className="shrink-0 flex items-center justify-center">
@@ -188,13 +188,6 @@ export default function ConnectModal({
                   </button>
                 );
               })}
-
-              {/* Divider + WalletConnect note */}
-              <div className="pt-2 border-t border-border mt-3">
-                <p className="text-[11px] text-dim text-center leading-relaxed">
-                  WalletConnect supports 300+ mobile wallets via QR code
-                </p>
-              </div>
             </div>
           )}
 
@@ -207,9 +200,9 @@ export default function ConnectModal({
         </div>
 
         {/* Footer */}
-        <div className="px-5 pb-5 pt-0">
-          <p className="text-[10px] text-dim text-center leading-relaxed">
-            Connecting to BOT Chain (chain 968) · Never share your private key
+        <div className="px-4 pb-3.5 pt-0">
+          <p className="text-[10px] text-dim text-center">
+            BOT Chain (968) · Never share your private key
           </p>
         </div>
       </div>
