@@ -280,9 +280,9 @@ function PillarMatrix() {
   ];
 
   return (
-    <section className="py-20 sm:py-24 bg-black relative">
+    <section className="py-12 sm:py-16 bg-black relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <FadeIn className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+        <FadeIn className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
           <p className="text-xs font-mono text-accent tracking-widest uppercase mb-3">
             PROTOCOL ARCHITECTURE
           </p>
@@ -384,9 +384,9 @@ function ProtocolEngine() {
   ];
 
   return (
-    <section id="architecture" className="py-20 sm:py-24 bg-black relative">
+    <section id="architecture" className="py-12 sm:py-16 bg-black relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <FadeIn className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+        <FadeIn className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
           <p className="text-xs font-mono text-accent tracking-widest uppercase mb-3">
             INTERACTIVE PROTOCOL LIFECYCLE
           </p>
@@ -479,7 +479,7 @@ function ProtocolEngine() {
 ───────────────────────────────────────────────────────────── */
 function DePINFleetMatrix() {
   return (
-    <section className="py-20 sm:py-24 bg-black relative">
+    <section className="py-12 sm:py-16 bg-black relative">
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
         <FadeIn className="text-center flex flex-col items-center">
           <p className="text-xs font-mono text-accent tracking-widest uppercase mb-2 sm:mb-3">
@@ -517,7 +517,7 @@ function RestakeVisualizer() {
   const multiplier = parseFloat(restakeTiers[selectedTier]?.boost.replace("x", "") || "1.5");
 
   return (
-    <section className="py-20 sm:py-24 bg-black relative">
+    <section className="py-12 sm:py-16 bg-black relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
           
@@ -640,7 +640,7 @@ function StreamingDecisions() {
   const { data: decisions } = useDecisions();
 
   return (
-    <section className="py-20 sm:py-24 bg-black relative">
+    <section className="py-12 sm:py-16 bg-black relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 items-center">
           
@@ -750,9 +750,9 @@ function SecurityFramework() {
   ];
 
   return (
-    <section className="py-20 sm:py-24 bg-black relative">
+    <section className="py-12 sm:py-16 bg-black relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <FadeIn className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+        <FadeIn className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
           <p className="text-xs font-mono text-accent tracking-widest uppercase mb-3">
             INSTITUTIONAL RISK MANAGEMENT
           </p>
@@ -803,9 +803,9 @@ function ProtocolMetricsRadar() {
   ];
 
   return (
-    <section className="py-20 sm:py-24 bg-black relative">
+    <section className="py-12 sm:py-16 bg-black relative">
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
-        <FadeIn className="text-center mb-10 sm:mb-14">
+        <FadeIn className="text-center mb-7 sm:mb-10">
           <p className="text-xs font-mono text-accent tracking-widest uppercase mb-2">LIVE METRICS</p>
           <h2 className="font-display font-bold text-2xl sm:text-4xl text-white">By the Numbers</h2>
         </FadeIn>
@@ -855,9 +855,9 @@ function FAQSection() {
   ];
 
   return (
-    <section className="py-20 sm:py-28 bg-black relative">
+    <section className="py-12 sm:py-16 bg-black relative">
       <div className="max-w-3xl mx-auto px-4 sm:px-6">
-        <FadeIn className="text-center mb-10 sm:mb-14">
+        <FadeIn className="text-center mb-7 sm:mb-10">
           <p className="text-xs font-mono text-accent tracking-widest uppercase mb-2">DOCUMENTATION & FAQ</p>
           <h2 className="font-display font-bold text-2xl sm:text-4xl text-white">Frequently Asked Questions</h2>
         </FadeIn>
