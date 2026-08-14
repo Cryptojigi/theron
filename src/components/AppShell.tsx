@@ -84,10 +84,10 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   }, [isConnected, chainId, switchChain]);
 
   return (
-    <div className="min-h-screen flex flex-col lg:flex-row">
+    <div className="h-screen flex flex-col lg:flex-row overflow-hidden">
 
       {/* ── DESKTOP SIDEBAR ── */}
-      <aside className="hidden lg:flex lg:flex-col w-60 shrink-0 border-r border-border bg-surface/50 sticky top-0 h-screen">
+      <aside className="hidden lg:flex lg:flex-col w-60 shrink-0 border-r border-border bg-surface/50 h-full overflow-y-auto">
         {/* Brand */}
         <div className="h-16 flex items-center px-5 border-b border-border">
           <Link href="/" className="flex items-center gap-2 group">
@@ -225,8 +225,8 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         })}
       </nav>
 
-      {/* Main content — extra bottom padding on mobile for the bottom nav */}
-      <main className="flex-1 min-w-0 px-4 sm:px-8 py-8 pb-24 lg:pb-8">
+      {/* Main content — scrolls independently; sidebar stays fixed */}
+      <main className="flex-1 min-w-0 overflow-y-auto px-4 sm:px-8 py-8 pb-24 lg:pb-8">
         <div className="max-w-6xl mx-auto">{children}</div>
       </main>
 

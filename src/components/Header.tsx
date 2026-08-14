@@ -82,10 +82,10 @@ export default function Header() {
           {/* ─ MOBILE: slim full-width bar ─ */}
           <div className="md:hidden flex items-center justify-between px-4 h-14 bg-bg/90 backdrop-blur-xl border-b border-white/8">
             <Link href="/" className="flex items-center">
-              <Image src="/logo.png" alt="Theron" width={400} height={219} className="h-7 w-auto" priority />
+              <Image src="/icon.png" alt="Theron" width={180} height={46} className="h-5 w-auto" priority />
             </Link>
             <div className="flex items-center gap-2">
-              <Link href="/app/fund" className="bg-accent text-black text-xs font-semibold px-3 py-1.5 rounded-lg hover:opacity-90 transition-opacity">
+              <Link href="/app/fund" className="bg-accent text-black text-xs font-semibold px-3 py-1.5 hover:opacity-90 transition-opacity border border-accent">
                 Launch →
               </Link>
               <button onClick={() => setMobileOpen(!mobileOpen)} className="text-muted p-1.5" aria-label="Menu">

@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="border-t border-border mt-24">
+    <footer className="mt-16 bg-black">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
         <div className="flex flex-col md:flex-row justify-between gap-8">
           <div>
@@ -27,9 +27,9 @@ export default function Footer() {
             <div>
               <h4 className="text-dim uppercase tracking-wider text-xs mb-3">Ecosystem</h4>
               <ul className="space-y-2">
-                <li><a href="https://www.botchain.ai" target="_blank" rel="noopener" className="text-muted hover:text-accent">BOT Chain</a></li>
-                <li><a href="https://scan.botchain.ai" target="_blank" rel="noopener" className="text-muted hover:text-accent">Explorer</a></li>
-                <li><a href="https://github.com/BOTChain-bot" target="_blank" rel="noopener" className="text-muted hover:text-accent">GitHub</a></li>
+                <li><Link href="https://github.com/Cryptojigi/theron" target="_blank" rel="noopener noreferrer" className="text-muted hover:text-accent">Documentation</Link></li>
+                <li><a href="https://scan.bohr.life" target="_blank" rel="noopener noreferrer" className="text-muted hover:text-accent">Explorer</a></li>
+                <li><a href="https://github.com/Cryptojigi/theron" target="_blank" rel="noopener noreferrer" className="text-muted hover:text-accent">GitHub</a></li>
               </ul>
             </div>
           </div>

@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #0D0D0D;
-  --surface: #141414;
-  --surface-2: #1C1C1C;
+  --bg: #000000;
+  --surface: #0a0a0c;
+  --surface-2: #141416;
   --primary: #3E55C8;
   --primary-hover: #5269DA;
   --accent: #FFA800;
@@ -35,13 +35,16 @@
 
 html {
   color-scheme: dark;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
 body {
-  background: var(--bg);
+  background: #000000;
   color: var(--text);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  max-width: 100vw;
   overflow-x: hidden;
 }
 
@@ -66,12 +69,54 @@ body {
   background: var(--text-dim);
 }
 
-/* Utility: sharp corners for containers, subtle 4px for interactive elements */
+/* Utility: sharp corners for containers and interactive elements */
 .card {
   border-radius: 0;
 }
 .btn {
-  border-radius: 4px;
+  border-radius: 0;
+}
+
+/* ZKM-Style Cyber Card & Glow Effects */
+.zkm-card {
+  position: relative;
+  background: rgba(18, 18, 22, 0.65);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+.zkm-card::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.zkm-card:hover {
+  border-color: rgba(255, 168, 0, 0.35);
+  box-shadow: 0 16px 40px -12px rgba(255, 168, 0, 0.12), 0 0 0 1px rgba(255, 168, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+.zkm-card:hover::after {
+  transform: scaleX(1);
+}
+
+.glow-amber-radial {
+  background: radial-gradient(circle, rgba(255, 168, 0, 0.15) 0%, rgba(255, 168, 0, 0) 70%);
+}
+
+.glow-indigo-radial {
+  background: radial-gradient(circle, rgba(62, 85, 200, 0.18) 0%, rgba(62, 85, 200, 0) 70%);
 }
 
 /* Loading skeleton shimmer */
