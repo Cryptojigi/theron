@@ -91,8 +91,8 @@ function Hero() {
             transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-7 min-w-0 pt-2"
           >
-            {/* Display Title */}
-            <h1 className="font-display font-black text-3xl sm:text-5xl lg:text-6xl tracking-tight text-white leading-[1.1] mb-5 sm:mb-6 break-words">
+            {/* Display Title (Moderate Proportions) */}
+            <h1 className="font-display font-bold text-2xl sm:text-3xl lg:text-[42px] tracking-tight text-white leading-[1.18] mb-4 sm:mb-5 max-w-2xl">
               Autonomous Capital Allocation for the{" "}
               <span className="text-accent bg-clip-text">
                 DePIN Compute Economy
@@ -100,21 +100,21 @@ function Hero() {
             </h1>
 
             {/* Sub-Headline Narrative */}
-            <p className="text-sm sm:text-lg text-[#A0A0A5] leading-relaxed max-w-2xl mb-4 font-normal">
+            <p className="text-sm sm:text-base text-[#A0A0A5] leading-relaxed max-w-xl mb-3 font-normal">
               Theron evaluates real decentralized compute nodes — GPU clusters, high-throughput CPUs, 
               and physical infrastructure — deploying capital automatically and streaming revenue back 
               every single block.
             </p>
 
-            <p className="text-xs sm:text-sm text-[#707070] font-mono mb-7 sm:mb-8 max-w-xl">
+            <p className="text-xs text-[#707070] font-mono mb-6 sm:mb-7 max-w-lg">
               Zero human latency. Algorithmic underwriting. 100% on-chain verifiable intent hashes.
             </p>
 
             {/* CTA Group (Responsive Stack on Mobile) */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 w-full sm:w-auto">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-3.5 w-full sm:w-auto">
               <Link
                 href="/app/fund"
-                className="w-full sm:w-auto justify-center bg-accent text-black font-semibold px-7 py-3.5 hover:bg-[#ffb726] transition-all transform hover:-translate-y-0.5 shadow-[0_0_24px_rgba(255,168,0,0.3)] text-sm tracking-wide flex items-center gap-2 border border-accent text-center"
+                className="w-full sm:w-auto justify-center bg-accent text-black font-semibold px-6 py-3 hover:bg-[#ffb726] transition-all transform hover:-translate-y-0.5 shadow-[0_0_24px_rgba(255,168,0,0.3)] text-sm tracking-wide flex items-center gap-2 border border-accent text-center"
               >
                 Launch Fund
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -124,7 +124,7 @@ function Hero() {
               
               <a
                 href="#architecture"
-                className="w-full sm:w-auto text-center justify-center border border-white/15 bg-white/[0.04] text-white px-6 py-3.5 hover:border-accent hover:text-accent transition-all text-sm tracking-wide backdrop-blur-sm"
+                className="w-full sm:w-auto text-center justify-center border border-white/15 bg-white/[0.04] text-white px-5 py-3 hover:border-accent hover:text-accent transition-all text-sm tracking-wide backdrop-blur-sm"
               >
                 Explore Architecture ↓
               </a>
