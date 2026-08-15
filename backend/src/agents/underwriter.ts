@@ -6,6 +6,11 @@ import { keccak256, encodePacked, stringToHex } from 'viem';
 import type { TheronNode } from '../lib/types';
 import { scoreNode, isEligibleForAllocation } from '../lib/scoring';
 
+// Last score written on-chain per node. Prevents re-recording an identical
+// decision every 60s (gas + API waste). A decision is written when the score
+// CHANGES — that's when the AI's judgment genuinely updates.
+const lastWrittenScore = new Map<string, number>();
+
 export class UnderwriterAgent {
   async evaluateNodes() {
     const contracts = getContracts();
@@ -42,6 +47,14 @@ export class UnderwriterAgent {
       );
 
       scores[nodeAddr] = finalScore;
+
+      // Throttle: skip the on-chain write if this score is unchanged from
+      // the last recorded one (still returned in `scores` for the allocator).
+      if (lastWrittenScore.get(nodeAddr) === finalScore) {
+        console.log(`Underwriter: ${nodeAddr} unchanged at ${finalScore} — skip write`);
+        continue;
+      }
+      lastWrittenScore.set(nodeAddr, finalScore);
 
       const actionStr = `underwrite ${nodeAddr}`;
       const details = `Scored node ${nodeAddr} with ${finalScore}/100. Uptime: ${(Number(node.uptimePercentage) / 100).toFixed(2)}%. Stake: ${Number(node.stakeRequired) / 1e18} BOT. Revenue: ${Number(node.revenueGenerated) / 1e18} BOT.`;

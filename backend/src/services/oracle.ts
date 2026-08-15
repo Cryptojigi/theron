@@ -78,8 +78,11 @@ export class OracleService {
 
       if (!node.active) continue;
 
-      const operator = node.operator.toLowerCase();
-      const blocksProduced = minerCounts[operator] || 0;
+      // Match the node's OWN address to real block production — not the
+      // staker's (operator = msg.sender at registration). This measures the
+      // machine's actual performance, which is what "uptime" means.
+      const producerAddr = nodeAddr.toLowerCase();
+      const blocksProduced = minerCounts[producerAddr] || 0;
 
       const rawUptimeBps = Math.min(
         10000,
