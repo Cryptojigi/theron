@@ -68,8 +68,8 @@ export const wagmiConfig = createConfig({
     }),
     // Generic fallback — any other injected wallet
     injected(),
-    coinbaseWallet({ appName: 'Theron', appLogoUrl: 'http://145.241.206.217/favicon.png' }),
-    walletConnect({ projectId: WC_PROJECT_ID, metadata: { name: 'Theron', description: 'AI-managed RWA fund on BOT Chain', url: 'http://145.241.206.217', icons: ['http://145.241.206.217/favicon.png'] } }),
+    coinbaseWallet({ appName: 'Theron', appLogoUrl: 'https://theronfund.duckdns.org/favicon.png' }),
+    walletConnect({ projectId: WC_PROJECT_ID, metadata: { name: 'Theron', description: 'AI-managed RWA fund on BOT Chain', url: 'https://theronfund.duckdns.org', icons: ['https://theronfund.duckdns.org/favicon.png'] } }),
   ],
   transports: {
     [botChainTestnet.id]: http(),
