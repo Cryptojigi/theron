@@ -280,7 +280,7 @@ function PillarMatrix() {
   ];
 
   return (
-    <section className="py-12 sm:py-16 bg-black relative">
+    <section id="features" className="py-12 sm:py-16 bg-black relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <FadeIn className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
           <p className="text-xs font-mono text-accent tracking-widest uppercase mb-3">
@@ -713,7 +713,7 @@ function StreamingDecisions() {
 
               <div className="px-4 sm:px-6 py-3 border-t border-white/[0.08] bg-[#0f0f13] flex items-center justify-between text-[11px] sm:text-xs font-mono text-[#6A6A75]">
                 <span>CONTRACT: AISignatureRegistry</span>
-                <a href="https://scan.bohr.life" target="_blank" rel="noopener noreferrer" className="hover:text-accent text-accent/80 transition-colors">
+                <a href="https://scan.botchain.ai" target="_blank" rel="noopener noreferrer" className="hover:text-accent text-accent/80 transition-colors">
                   Explorer ↗
                 </a>
               </div>

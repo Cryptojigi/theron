@@ -40,7 +40,7 @@ export default function DocsSearch() {
   }
 
   return (
-    <div ref={boxRef} className="relative flex-1 max-w-md">
+    <div ref={boxRef} className="relative w-32 md:w-64">
       <div className="flex items-center gap-2 border border-border bg-surface rounded-sm px-3 py-1.5 text-xs text-dim focus-within:border-accent/60 transition-colors">
         <span>⌕</span>
         <input

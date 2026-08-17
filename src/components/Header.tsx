@@ -104,8 +104,8 @@ export default function Header() {
           {/* Mobile dropdown menu */}
           {mobileOpen && (
             <div className="md:hidden bg-surface/98 backdrop-blur-xl border-b border-border px-5 py-4 space-y-1">
-              <a href="/#how" onClick={() => setMobileOpen(false)} className="flex items-center gap-2 py-3 text-sm text-muted hover:text-accent border-b border-border/50 transition-colors">Features</a>
-              <a href="https://scan.bohr.life" target="_blank" rel="noopener noreferrer" onClick={() => setMobileOpen(false)} className="flex items-center gap-2 py-3 text-sm text-muted hover:text-accent border-b border-border/50 transition-colors">Explorer ↗</a>
+              <a href="/#features" onClick={() => setMobileOpen(false)} className="flex items-center gap-2 py-3 text-sm text-muted hover:text-accent border-b border-border/50 transition-colors">Features</a>
+              <a href="https://scan.botchain.ai" target="_blank" rel="noopener noreferrer" onClick={() => setMobileOpen(false)} className="flex items-center gap-2 py-3 text-sm text-muted hover:text-accent border-b border-border/50 transition-colors">Explorer ↗</a>
               <Link href="/docs" onClick={() => setMobileOpen(false)} className="flex items-center gap-2 py-3 text-sm text-muted hover:text-accent transition-colors">Docs</Link>
             </div>
           )}
@@ -117,8 +117,8 @@ export default function Header() {
                 <Image src="/icon.png" alt="Theron" width={160} height={41} className="h-5 w-auto" priority />
               </Link>
               <nav className="flex items-center gap-6 text-sm text-muted">
-                <a href="/#how" className="hover:text-accent transition-colors">Features</a>
-                <a href="https://scan.bohr.life" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">Explorer</a>
+                <a href="/#features" className="hover:text-accent transition-colors">Features</a>
+                <a href="https://scan.botchain.ai" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">Explorer</a>
                 <Link href="/docs" className="hover:text-accent transition-colors">Docs</Link>
               </nav>
               <Link href="/app/fund" className="shrink-0 bg-accent text-black text-xs font-semibold px-4 py-2 rounded-lg hover:opacity-90 transition-opacity">

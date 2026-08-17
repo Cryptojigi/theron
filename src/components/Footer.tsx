@@ -28,7 +28,7 @@ export default function Footer() {
               <h4 className="text-dim uppercase tracking-wider text-xs mb-3">Ecosystem</h4>
               <ul className="space-y-2">
                 <li><Link href="https://github.com/Cryptojigi/theron" target="_blank" rel="noopener noreferrer" className="text-muted hover:text-accent">Documentation</Link></li>
-                <li><a href="https://scan.bohr.life" target="_blank" rel="noopener noreferrer" className="text-muted hover:text-accent">Explorer</a></li>
+                <li><a href="https://scan.botchain.ai" target="_blank" rel="noopener noreferrer" className="text-muted hover:text-accent">Explorer</a></li>
                 <li><a href="https://github.com/Cryptojigi/theron" target="_blank" rel="noopener noreferrer" className="text-muted hover:text-accent">GitHub</a></li>
               </ul>
             </div>

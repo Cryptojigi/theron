@@ -74,7 +74,7 @@ export default function DecisionsPage() {
                   {new Date(d.timestamp * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
                 </span>
                 <a
-                  href={`https://scan.bohr.life/address/${contracts.aiSignatureRegistry.address}`}
+                  href={`https://scan.botchain.ai/address/${contracts.aiSignatureRegistry.address}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-[11px] text-muted hover:text-accent transition-colors underline underline-offset-4"
