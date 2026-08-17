@@ -1,6 +1,6 @@
 import { cookieStorage, createStorage, http } from '@wagmi/core';
 import { WagmiAdapter } from '@reown/appkit-adapter-wagmi';
-import { defineChain } from '@reown/appkit/networks';
+import { defineChain, mainnet, arbitrum, polygon, bsc } from '@reown/appkit/networks';
 
 // WalletConnect / Reown project ID
 export const projectId = process.env.NEXT_PUBLIC_WC_PROJECT_ID || 'b56e18d47c72ab683b10814fe9495694';
@@ -28,7 +28,7 @@ export const botChainTestnet = defineChain({
   },
 });
 
-export const networks = [botChainTestnet];
+export const networks = [botChainTestnet, mainnet, arbitrum, polygon, bsc];
 
 // Set up the Wagmi Adapter
 export const wagmiAdapter = new WagmiAdapter({
@@ -40,6 +40,10 @@ export const wagmiAdapter = new WagmiAdapter({
   networks,
   transports: {
     [botChainTestnet.id]: http('https://rpc.bohr.life'),
+    [mainnet.id]: http(),
+    [arbitrum.id]: http(),
+    [polygon.id]: http(),
+    [bsc.id]: http(),
   },
 });
 
@@ -60,4 +64,5 @@ export function clearWagmiStorage() {
     /* storage unavailable — ignore */
   }
 }
+
 
