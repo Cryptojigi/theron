@@ -14,7 +14,7 @@ export default function Footer() {
               The AI fund manager that owns and operates real machines. Yield from the compute economy, streamed every second.
             </p>
           </div>
-          <div className="grid grid-cols-2 gap-8 text-sm">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 text-sm">
             <div>
               <h4 className="text-dim uppercase tracking-wider text-xs mb-3">Product</h4>
               <ul className="space-y-2">
@@ -30,6 +30,14 @@ export default function Footer() {
                 <li><Link href="https://github.com/Cryptojigi/theron" target="_blank" rel="noopener noreferrer" className="text-muted hover:text-accent">Documentation</Link></li>
                 <li><a href="https://scan.botchain.ai" target="_blank" rel="noopener noreferrer" className="text-muted hover:text-accent">Explorer</a></li>
                 <li><a href="https://github.com/Cryptojigi/theron" target="_blank" rel="noopener noreferrer" className="text-muted hover:text-accent">GitHub</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-dim uppercase tracking-wider text-xs mb-3">Legal</h4>
+              <ul className="space-y-2">
+                <li><Link href="/terms" className="text-muted hover:text-accent">Terms of Service</Link></li>
+                <li><Link href="/privacy" className="text-muted hover:text-accent">Privacy Policy</Link></li>
+                <li><Link href="/risk" className="text-muted hover:text-accent">Risk Disclosure</Link></li>
               </ul>
             </div>
           </div>
