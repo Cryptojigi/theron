@@ -1,96 +1,63 @@
-import { http, createConfig } from 'wagmi';
-import { injected, coinbaseWallet, walletConnect } from 'wagmi/connectors';
-import { defineChain } from 'viem';
+import { cookieStorage, createStorage, http } from '@wagmi/core';
+import { WagmiAdapter } from '@reown/appkit-adapter-wagmi';
+import { defineChain } from '@reown/appkit/networks';
+
+// WalletConnect / Reown project ID
+export const projectId = process.env.NEXT_PUBLIC_WC_PROJECT_ID || 'b56e18d47c72ab683b10814fe9495694';
 
 export const botChainTestnet = defineChain({
   id: 968,
+  caipNetworkId: 'eip155:968',
+  chainNamespace: 'eip155',
   name: 'BOT Chain Testnet',
-  nativeCurrency: { name: 'BOT', symbol: 'BOT', decimals: 18 },
+  nativeCurrency: {
+    name: 'BOT',
+    symbol: 'BOT',
+    decimals: 18,
+  },
   rpcUrls: {
-    default: { http: ['https://rpc.bohr.life'] },
+    default: {
+      http: ['https://rpc.bohr.life'],
+    },
   },
   blockExplorers: {
-    default: { name: 'BohrScan', url: 'https://scan.bohr.life' },
+    default: {
+      name: 'BohrScan',
+      url: 'https://scan.bohr.life',
+    },
   },
 });
 
-// WalletConnect project ID — get one free at https://cloud.walletconnect.com
-const WC_PROJECT_ID = process.env.NEXT_PUBLIC_WC_PROJECT_ID || 'b56e18d47c72ab683b10814fe9495694';
+export const networks = [botChainTestnet];
 
-// MetaMask target with strict exclusion: several wallets (OKX, Bitget, TokenPocket,
-// KuCoin, Rabby) spoof `isMetaMask: true` to be compatible with dapps — that made
-// "MetaMask" silently connect to OKX. This target only accepts the real thing.
-const metaMaskTarget = {
-  id: 'io.metamask',
-  name: 'MetaMask',
-  provider(window?: any) {
-    const ethereum = window?.ethereum;
-    const candidates = ethereum?.providers ?? [ethereum];
-    return candidates.find(
-      (p: any) =>
-        p?.isMetaMask &&
-        !p.isOkxWallet &&
-        !p.isOKExWallet &&
-        !p.isBitKeep &&
-        !p.isTokenPocket &&
-        !p.isKuCoinWallet &&
-        !p.isRabby
-    );
-  },
-};
-
-export const wagmiConfig = createConfig({
-  chains: [botChainTestnet],
-  connectors: [
-    // MetaMask — strict target (rejects lookalike/spoofing wallets)
-    injected({ target: metaMaskTarget as any }),
-    // Direct-to-extension connectors — each wallet's own global, no window.ethereum fighting
-    injected({
-      target: {
-        id: 'com.okex.wallet',
-        name: 'OKX Wallet',
-        provider: (window: any) => (window as any)?.okxwallet,
-      } as any,
-    }),
-    injected({
-      target: {
-        id: 'com.bitkeep',
-        name: 'Bitget Wallet',
-        provider: (window: any) => (window as any)?.bitkeep,
-      } as any,
-    }),
-    injected({
-      target: {
-        id: 'com.tokenpocket',
-        name: 'TokenPocket',
-        provider: (window: any) => (window as any)?.tokenpocket,
-      } as any,
-    }),
-    // Generic fallback — any other injected wallet
-    injected(),
-    coinbaseWallet({ appName: 'Theron', appLogoUrl: 'https://theronfund.duckdns.org/favicon.png' }),
-    walletConnect({ projectId: WC_PROJECT_ID, metadata: { name: 'Theron', description: 'AI-managed RWA fund on BOT Chain', url: 'https://theronfund.duckdns.org', icons: ['https://theronfund.duckdns.org/favicon.png'] } }),
-  ],
+// Set up the Wagmi Adapter
+export const wagmiAdapter = new WagmiAdapter({
+  storage: createStorage({
+    storage: cookieStorage,
+  }),
+  ssr: true,
+  projectId,
+  networks,
   transports: {
-    [botChainTestnet.id]: http(),
+    [botChainTestnet.id]: http('https://rpc.bohr.life'),
   },
-  // storage: null — no session persistence. Without it, wagmi re-hydrates the
-  // previous wallet session from localStorage on every page load (wallet
-  // "reconnects" on refresh) and disconnect can be resurrected by the shim.
-  storage: null,
 });
 
-// Force-clear wagmi's persisted state so a disconnect is final — storage can't
-// resurrect the session (belt & braces on top of disconnect()).
+export const wagmiConfig = wagmiAdapter.wagmiConfig;
+
+// Force-clear wagmi's persisted state on disconnect
 export function clearWagmiStorage() {
   try {
     const keys: string[] = [];
     for (let i = 0; i < localStorage.length; i++) {
       const k = localStorage.key(i);
-      if (k && (k.startsWith('wagmi.') || k.includes('.disconnected'))) keys.push(k);
+      if (k && (k.startsWith('wagmi.') || k.startsWith('@w3m') || k.startsWith('@appkit') || k.includes('.disconnected'))) {
+        keys.push(k);
+      }
     }
     keys.forEach((k) => localStorage.removeItem(k));
   } catch {
     /* storage unavailable — ignore */
   }
 }
+

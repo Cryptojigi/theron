@@ -3,12 +3,12 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import ConnectModal from "./ConnectModal";
+import { useAppKit } from "@reown/appkit/react";
 import { useAccount, useDisconnect } from "wagmi";
 import { usePathname } from "next/navigation";
 
 export default function Header() {
-  const [open, setOpen] = useState(false);
+  const { open } = useAppKit();
   const [mobileOpen, setMobileOpen] = useState(false);
   const { address, isConnected } = useAccount();
   const { disconnect } = useDisconnect();
@@ -36,16 +36,19 @@ export default function Header() {
             <div className="flex items-center gap-3">
               {isConnected ? (
                 <div className="hidden sm:flex items-center gap-2">
-                  <span className="text-sm font-mono text-text bg-surface px-3 py-1.5 border border-border">
+                  <button
+                    onClick={() => open({ view: "Account" })}
+                    className="text-sm font-mono text-text bg-surface px-3 py-1.5 border border-border hover:border-accent/50 transition-colors"
+                  >
                     {address?.slice(0, 6)}...{address?.slice(-4)}
-                  </span>
+                  </button>
                   <button onClick={() => disconnect()} className="text-xs text-muted hover:text-accent transition-colors">
                     Disconnect
                   </button>
                 </div>
               ) : (
                 <button
-                  onClick={() => setOpen(true)}
+                  onClick={() => open()}
                   className="hidden sm:inline-flex bg-primary text-white text-sm px-5 py-2.5 btn hover:bg-primary-hover transition-colors"
                 >
                   Connect Wallet
@@ -70,7 +73,7 @@ export default function Header() {
                   <button onClick={() => { disconnect(); setMobileOpen(false); }} className="w-full border border-border text-text text-sm px-5 py-2.5 btn">Disconnect</button>
                 </div>
               ) : (
-                <button onClick={() => { setOpen(true); setMobileOpen(false); }} className="w-full bg-primary text-white text-sm px-5 py-2.5 btn">Connect Wallet</button>
+                <button onClick={() => { open(); setMobileOpen(false); }} className="w-full bg-primary text-white text-sm px-5 py-2.5 btn">Connect Wallet</button>
               )}
             </div>
           )}
@@ -125,7 +128,6 @@ export default function Header() {
           </div>
         </header>
       )}
-      <ConnectModal open={open} onClose={() => setOpen(false)} />
     </>
   );
 }

@@ -3,8 +3,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import ConnectModal from "@/components/ConnectModal";
+import { useEffect } from "react";
+import { useAppKit } from "@reown/appkit/react";
 import { useAccount, useDisconnect, useSwitchChain } from "wagmi";
 import { clearWagmiStorage } from "@/lib/wagmi";
 
@@ -66,7 +66,7 @@ const navItems = [
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const [walletOpen, setWalletOpen] = useState(false);
+  const { open } = useAppKit();
   const { address, isConnected, chainId } = useAccount();
   const { disconnect } = useDisconnect();
   const { switchChain } = useSwitchChain();
@@ -126,7 +126,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                 }`}
               >
                 {/* Icon */}
-                <span className={`shrink-0 transition-opacity ${active ? "opacity-100" : "opacity-40 group-hover:opacity-70"}`}>
+                <span className={`shrink-0 transition-opacity ${active ? "opacity-100" : "opacity-40"}`}>
                   {icon}
                 </span>
                 {item.label}
@@ -144,9 +144,13 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         <div className="px-4 py-5 border-t border-border space-y-3">
           {isConnected && address ? (
             <>
-              <div className="text-xs font-mono text-dim truncate px-1">
-                {address.slice(0, 6)}...{address.slice(-4)}
-              </div>
+              <button
+                onClick={() => open({ view: "Account" })}
+                className="w-full text-left text-xs font-mono text-dim hover:text-accent truncate px-1 py-1 transition-colors"
+                title="View Account"
+              >
+                {address.slice(0, 6)}...{address.slice(-4)} ↗
+              </button>
               <button
                 onClick={() => {
                   try {
@@ -163,7 +167,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
             </>
           ) : (
             <button
-              onClick={() => setWalletOpen(true)}
+              onClick={() => open()}
               className="w-full bg-accent text-black text-sm px-4 py-2.5 btn hover:opacity-90 transition-opacity font-medium"
             >
               Connect Wallet
@@ -186,15 +190,23 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
             />
           </Link>
           {isConnected && address ? (
-            <button
-              onClick={() => disconnect()}
-              className="px-3 py-1.5 text-xs border border-border text-text btn font-medium hover:border-red-500/50 hover:text-red-400 transition-colors"
-            >
-              Disconnect
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => open({ view: "Account" })}
+                className="px-2.5 py-1 text-xs font-mono border border-border text-text btn"
+              >
+                {address.slice(0, 4)}...{address.slice(-2)}
+              </button>
+              <button
+                onClick={() => disconnect()}
+                className="px-2.5 py-1 text-xs border border-border text-muted btn font-medium hover:border-red-500/50 hover:text-red-400 transition-colors"
+              >
+                Disconnect
+              </button>
+            </div>
           ) : (
             <button
-              onClick={() => setWalletOpen(true)}
+              onClick={() => open()}
               className="px-3 py-1.5 text-xs bg-accent text-black btn font-medium"
             >
               Connect
@@ -229,8 +241,6 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
       <main className="flex-1 min-w-0 overflow-y-auto px-4 sm:px-8 py-8 pb-24 lg:pb-8">
         <div className="max-w-6xl mx-auto">{children}</div>
       </main>
-
-      <ConnectModal open={walletOpen} onClose={() => setWalletOpen(false)} />
     </div>
   );
 }
