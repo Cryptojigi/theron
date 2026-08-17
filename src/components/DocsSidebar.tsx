@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { DOCS_NAV } from "@/lib/docs";
 
-export default function DocsSidebar() {
+export default function DocsSidebar({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname();
   const currentSlug = pathname.replace(/^\/docs\/?/, "").split("/")[0] || "about";
 
@@ -40,6 +40,7 @@ export default function DocsSidebar() {
                       <li key={p.slug}>
                         <Link
                           href={`/docs/${p.slug}`}
+                          onClick={onNavigate}
                           className={`block px-4 py-1.5 text-[13px] transition-colors border-l-2 ${
                             active
                               ? "text-accent border-accent bg-surface/60 font-medium"

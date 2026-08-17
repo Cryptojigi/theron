@@ -26,7 +26,7 @@ export default async function DocPage({
   return (
     <div className="flex">
       {/* Main content */}
-      <article className="flex-1 min-w-0 max-w-3xl px-8 py-10">
+      <article className="flex-1 min-w-0 max-w-3xl px-5 md:px-8 py-6 md:py-10">
         <div className="text-[11px] font-mono tracking-widest uppercase text-dim mb-3">
           {group}
         </div>
