@@ -55,44 +55,37 @@ export default function Home() {
    1. HERO SECTION (Mobile Optimized & Sharp Edges)
 ───────────────────────────────────────────────────────────── */
 function Hero() {
-  const { data: stats, isLoading } = useFundStats();
-  const { data: nodesData } = useNodes();
-
-  const activeNodes = nodesData?.filter((n) => n.active).length || 0;
-  const totalNodes = nodesData?.length || 0;
-
   return (
     <section className="relative min-h-[85vh] flex items-center bg-black overflow-hidden">
-      {/* Background Cyber Grid */}
+      {/* Background Perspective Grid Floor */}
       <div
-        className="absolute inset-0 pointer-events-none opacity-40"
+        className="absolute inset-0 pointer-events-none bg-no-repeat bg-bottom bg-cover opacity-90 sm:opacity-70 z-0"
         style={{
-          backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)",
-          backgroundSize: "48px 48px",
+          backgroundImage: "url('/hero_img.png')",
           maskImage:
-            "radial-gradient(ellipse 85% 65% at 50% 35%, black 30%, transparent 80%)",
+            "radial-gradient(ellipse 100% 90% at 50% 50%, black 55%, transparent 100%)",
           WebkitMaskImage:
-            "radial-gradient(ellipse 85% 65% at 50% 35%, black 30%, transparent 80%)",
+            "radial-gradient(ellipse 100% 90% at 50% 50%, black 55%, transparent 100%)",
         }}
       />
-
-      {/* Layered Cyber Glowing Orbs */}
-      <div className="absolute -top-32 -left-20 w-[450px] sm:w-[600px] h-[450px] sm:h-[600px] bg-[#3E55C8]/15 blur-[160px] pointer-events-none" />
-      <div className="absolute top-1/4 -right-20 w-[400px] sm:w-[550px] h-[400px] sm:h-[550px] bg-[#FFA800]/12 blur-[150px] pointer-events-none" />
+      {/* Subtle Bottom & Top Fade for seamless section transitions */}
+      <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-black/40 via-transparent to-black/80 sm:from-black/70 sm:to-black z-0" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 w-full relative py-8 sm:py-12 md:py-16">
-        <div className="grid lg:grid-cols-12 gap-10 lg:gap-8 items-center">
+        <div className="flex flex-col items-center text-center max-w-3xl mx-auto">
           
-          {/* Left Column: Vision & Action */}
+          {/* Left Column: Vision & Action with Soft Radial Vignette for Superior Text Legibility */}
           <motion.div
             initial={{ opacity: 0, y: 35 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-7 min-w-0 pt-2"
+            className="min-w-0 pt-2 w-full relative"
           >
-            {/* Display Title (Balanced Proportions) */}
-            <h1 className="font-display font-bold text-3xl sm:text-4xl lg:text-[48px] tracking-tight text-white leading-[1.14] mb-4 sm:mb-5 max-w-2xl">
+            {/* Soft dark focal glow behind text to ensure crisp contrast against wireframe grid */}
+            <div className="absolute inset-0 -inset-x-8 bg-black/40 blur-xl pointer-events-none -z-10 rounded-full" />
+
+            {/* Display Title (Balanced Proportions & Legible on Mobile) */}
+            <h1 className="font-display font-bold text-[32px] sm:text-4xl lg:text-[48px] tracking-tight text-white leading-[1.16] mb-4 sm:mb-5 max-w-2xl mx-auto drop-shadow-[0_2px_12px_rgba(0,0,0,0.9)]">
               Autonomous Capital Allocation for the{" "}
               <span className="text-accent bg-clip-text">
                 DePIN Compute Economy
@@ -100,21 +93,21 @@ function Hero() {
             </h1>
 
             {/* Sub-Headline Narrative */}
-            <p className="text-sm sm:text-base text-[#A0A0A5] leading-relaxed max-w-xl mb-3.5 font-normal">
+            <p className="text-[15px] sm:text-base text-zinc-100 leading-relaxed max-w-xl mx-auto mb-3.5 font-medium sm:font-normal drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
               Theron evaluates real decentralized compute nodes — GPU clusters, high-throughput CPUs, 
               and physical infrastructure — deploying capital automatically and streaming revenue back 
               every single block.
             </p>
 
-            <p className="text-xs sm:text-[13px] text-[#707070] font-mono mb-6 sm:mb-7 max-w-lg">
+            <p className="text-[13px] sm:text-sm text-zinc-300 font-mono mb-6 sm:mb-7 max-w-lg mx-auto font-medium drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
               Zero human latency. Algorithmic underwriting. 100% on-chain verifiable intent hashes.
             </p>
 
             {/* CTA Group (Responsive Stack on Mobile) */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-3.5 w-full sm:w-auto">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-3.5 w-full sm:w-auto mx-auto">
               <Link
                 href="/app/fund"
-                className="w-full sm:w-auto justify-center bg-accent text-black font-semibold px-7 py-3.5 hover:bg-[#ffb726] transition-all transform hover:-translate-y-0.5 shadow-[0_0_24px_rgba(255,168,0,0.3)] text-sm tracking-wide flex items-center gap-2 border border-accent text-center"
+                className="w-full sm:w-auto justify-center bg-accent text-black font-semibold px-7 py-3.5 hover:bg-[#ffb726] transition-all transform hover:-translate-y-0.5 text-[15px] sm:text-sm tracking-wide flex items-center gap-2 border border-accent text-center shadow-lg"
               >
                 Launch Fund
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -124,90 +117,14 @@ function Hero() {
               
               <a
                 href="#architecture"
-                className="w-full sm:w-auto text-center justify-center border border-white/15 bg-white/[0.04] text-white px-6 py-3.5 hover:border-accent hover:text-accent transition-all text-sm tracking-wide backdrop-blur-sm"
+                className="w-full sm:w-auto text-center justify-center border border-white/25 bg-black/60 text-white px-6 py-3.5 hover:border-accent hover:text-accent transition-all text-[15px] sm:text-sm tracking-wide backdrop-blur-md font-medium shadow-md"
               >
                 Explore Architecture ↓
               </a>
             </div>
           </motion.div>
 
-          {/* Right Column: Floating Cyber Telemetry Terminal */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.85, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-5 relative w-full"
-          >
-            {/* Soft backdrop glow */}
-            <div className="absolute -inset-1 bg-gradient-to-br from-accent/20 to-primary/20 blur-xl opacity-60 pointer-events-none" />
-
-            <div
-              className="relative border border-white/15 bg-[#0a0a0d]/90 backdrop-blur-2xl p-5 sm:p-7 shadow-[0_24px_60px_rgba(0,0,0,0.8)]"
-            >
-              {/* Terminal Header */}
-              <div className="flex items-center justify-between pb-4 sm:pb-5 border-b border-white/[0.08] mb-5 sm:mb-6">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 bg-red-500/80" />
-                  <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 bg-yellow-500/80" />
-                  <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 bg-green-500/80" />
-                  <span className="ml-1 sm:ml-2 text-[10px] sm:text-xs font-mono text-[#7A7A85] uppercase tracking-wider">
-                    THERON // TELEMETRY
-                  </span>
-                </div>
-                <div className="flex items-center gap-1.5 px-2 py-0.5 sm:px-2.5 sm:py-1 bg-accent/10 border border-accent/30 text-[10px] sm:text-[11px] font-mono text-accent">
-                  <span className="w-1.5 h-1.5 bg-accent animate-pulse" />
-                  LIVE LOOP
-                </div>
-              </div>
-
-              {/* Metric Matrix */}
-              <div className="grid grid-cols-2 gap-3 sm:gap-6 mb-5 sm:mb-6">
-                <div className="p-3 sm:p-3.5 bg-white/[0.03] border border-white/[0.05]">
-                  <div className="text-[10px] sm:text-[11px] font-mono text-[#8E8E93] mb-1">TOTAL VALUE LOCKED</div>
-                  <div className="font-display font-bold text-xl sm:text-2xl text-white">
-                    {isLoading ? "—" : <CountUp target={stats?.tvl || 0} suffix=" BOT" />}
-                  </div>
-                </div>
-
-                <div className="p-3 sm:p-3.5 bg-white/[0.03] border border-white/[0.05]">
-                  <div className="text-[10px] sm:text-[11px] font-mono text-[#8E8E93] mb-1">NODES UNDERWRITTEN</div>
-                  <div className="font-display font-bold text-xl sm:text-2xl text-accent">
-                    {isLoading ? "—" : `${activeNodes} / ${totalNodes || 0}`}
-                  </div>
-                </div>
-
-                <div className="p-3 sm:p-3.5 bg-white/[0.03] border border-white/[0.05]">
-                  <div className="text-[10px] sm:text-[11px] font-mono text-[#8E8E93] mb-1">STREAMED / BLOCK</div>
-                  <div className="font-display font-bold text-lg sm:text-xl text-white">
-                    {isLoading ? "—" : `${stats?.yieldPerBlock || 0} BOT`}
-                  </div>
-                </div>
-
-                <div className="p-3 sm:p-3.5 bg-white/[0.03] border border-white/[0.05]">
-                  <div className="text-[10px] sm:text-[11px] font-mono text-[#8E8E93] mb-1">VAULT TOKEN</div>
-                  <div className="font-display font-bold text-lg sm:text-xl text-white font-mono">
-                    1 TRN = 1 BOT
-                  </div>
-                </div>
-              </div>
-
-              {/* Streaming Ticker Footnote */}
-              <div className="p-2.5 sm:p-3 bg-accent/[0.04] border border-accent/15 flex items-center justify-between text-xs">
-                <div className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 bg-accent animate-ping" />
-                  <span className="text-[#A0A0A0] text-[11px] sm:text-xs">Automated Rebalance</span>
-                </div>
-                <span className="font-mono text-accent font-medium text-[11px] sm:text-xs">Every 60s On-Chain</span>
-              </div>
-
-              {/* Sub-label */}
-              <div className="mt-4 pt-3 border-t border-white/[0.06] text-center">
-                <p className="text-[10px] sm:text-[11px] font-mono text-[#6A6A75] tracking-widest uppercase">
-                  EVERY TRANSACTION VERIFIABLE ON BOHRSCAN
-                </p>
-              </div>
-            </div>
-          </motion.div>
+          
 
         </div>
       </div>
@@ -283,13 +200,13 @@ function PillarMatrix() {
     <section id="features" className="py-12 sm:py-16 bg-black relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <FadeIn className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
-          <p className="text-xs font-mono text-accent tracking-widest uppercase mb-3">
+          <p className="text-[13px] sm:text-xs font-mono text-accent tracking-widest uppercase mb-3">
             PROTOCOL ARCHITECTURE
           </p>
-          <h2 className="font-display font-bold text-2xl sm:text-4xl text-white tracking-tight">
+          <h2 className="font-display font-bold text-[26px] sm:text-3xl lg:text-4xl text-white tracking-tight leading-tight">
             Engineered for <span className="text-accent">Zero Friction</span> and Absolute Truth.
           </h2>
-          <p className="mt-3 sm:mt-4 text-[#8E8E93] text-sm sm:text-base leading-relaxed">
+          <p className="mt-3 sm:mt-4 text-[#A0A0A5] text-[15px] sm:text-base leading-relaxed">
             Unlike traditional funds with slow governance and opaque balance sheets, Theron operates purely on mathematical proof and real-time blockchain telemetry.
           </p>
         </FadeIn>
@@ -302,7 +219,7 @@ function PillarMatrix() {
                 <div>
                   {/* Top Bar */}
                   <div className="flex items-center justify-between mb-5 sm:mb-6">
-                    <span className="text-xs font-mono text-[#6A6A75] uppercase tracking-wider">
+                    <span className="text-[13px] sm:text-xs font-mono text-[#6A6A75] uppercase tracking-wider">
                       {p.code}
                     </span>
                     <span className="text-xs font-mono px-2 py-0.5 border border-accent/30 text-accent bg-accent/5">
@@ -316,21 +233,21 @@ function PillarMatrix() {
                   </div>
 
                   {/* Header */}
-                  <h3 className="font-display font-bold text-lg sm:text-xl text-white tracking-tight mb-1 group-hover:text-accent transition-colors">
+                  <h3 className="font-display font-bold text-xl sm:text-xl text-white tracking-tight mb-1 group-hover:text-accent transition-colors">
                     {p.title}
                   </h3>
-                  <div className="text-xs font-mono text-accent mb-3 sm:mb-4">
+                  <div className="text-[13px] font-mono text-accent mb-3 sm:mb-4">
                     {p.subtitle}
                   </div>
 
                   {/* Description */}
-                  <p className="text-xs sm:text-sm text-[#A0A0A0] leading-relaxed mb-6">
+                  <p className="text-[14px] sm:text-sm text-[#B0B0B5] leading-relaxed mb-6">
                     {p.desc}
                   </p>
                 </div>
 
                 {/* Highlight Badge */}
-                <div className="pt-4 border-t border-white/[0.08] text-[11px] sm:text-xs font-mono text-[#7A7A85] leading-snug">
+                <div className="pt-4 border-t border-white/[0.08] text-xs sm:text-xs font-mono text-[#8E8E95] leading-snug">
                   {p.highlight}
                 </div>
               </div>
@@ -387,13 +304,13 @@ function ProtocolEngine() {
     <section id="architecture" className="py-12 sm:py-16 bg-black relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <FadeIn className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
-          <p className="text-xs font-mono text-accent tracking-widest uppercase mb-3">
+          <p className="text-[13px] sm:text-xs font-mono text-accent tracking-widest uppercase mb-3">
             INTERACTIVE PROTOCOL LIFECYCLE
           </p>
-          <h2 className="font-display font-bold text-2xl sm:text-4xl text-white tracking-tight">
+          <h2 className="font-display font-bold text-[26px] sm:text-3xl lg:text-4xl text-white tracking-tight leading-tight">
             How Capital Moves Through <span className="text-accent">Theron</span>.
           </h2>
-          <p className="mt-3 sm:mt-4 text-[#8E8E93] text-sm sm:text-base leading-relaxed">
+          <p className="mt-3 sm:mt-4 text-[#A0A0A5] text-[15px] sm:text-base leading-relaxed">
             Click through the pipeline stages below to inspect how user deposits convert into verified compute allocations and continuous block yield.
           </p>
         </FadeIn>
@@ -417,10 +334,10 @@ function ProtocolEngine() {
                     {step.num}
                   </span>
                   <div>
-                    <h4 className={`text-sm sm:text-base font-semibold ${selected ? "text-white" : "text-[#B0B0B5]"}`}>
+                    <h4 className={`text-[15px] sm:text-base font-semibold ${selected ? "text-white" : "text-[#B0B0B5]"}`}>
                       {step.title}
                     </h4>
-                    <p className="text-[11px] sm:text-xs font-mono text-[#7A7A82] mt-0.5 sm:mt-1">{step.actor}</p>
+                    <p className="text-xs sm:text-xs font-mono text-[#8E8E95] mt-0.5 sm:mt-1">{step.actor}</p>
                   </div>
                 </button>
               );
@@ -438,7 +355,7 @@ function ProtocolEngine() {
                   <span className="text-xs font-mono text-accent uppercase tracking-wider">
                     PHASE {steps[activeStep].num} // {steps[activeStep].actor}
                   </span>
-                  <span className="text-[11px] font-mono text-[#6A6A75]">
+                  <span className="text-xs font-mono text-[#7A7A85]">
                     BOT CHAIN CONTRACT EXECUTION
                   </span>
                 </div>
@@ -447,22 +364,22 @@ function ProtocolEngine() {
                   {steps[activeStep].title}
                 </h3>
                 
-                <p className="text-sm sm:text-base text-[#D0D0D5] leading-relaxed mb-3 sm:mb-4">
+                <p className="text-[15px] sm:text-base text-[#D0D0D5] leading-relaxed mb-3 sm:mb-4">
                   {steps[activeStep].summary}
                 </p>
 
-                <p className="text-xs sm:text-sm text-[#8E8E95] leading-relaxed mb-6 sm:mb-8">
+                <p className="text-sm sm:text-sm text-[#9E9EA5] leading-relaxed mb-6 sm:mb-8">
                   {steps[activeStep].details}
                 </p>
               </div>
 
               {/* On-Chain Payload Preview */}
               <div className="p-3 sm:p-4 bg-black border border-white/[0.08]">
-                <div className="text-[10px] sm:text-[11px] font-mono text-accent mb-1.5 flex items-center gap-2">
+                <div className="text-[11px] sm:text-[11px] font-mono text-accent mb-1.5 flex items-center gap-2">
                   <span className="w-1.5 h-1.5 bg-accent" />
                   SMART CONTRACT INTERFACE
                 </div>
-                <div className="font-mono text-[11px] sm:text-xs text-[#A0A0A5] break-all leading-relaxed bg-black/60 p-2 sm:p-2.5 border border-white/[0.04]">
+                <div className="font-mono text-xs sm:text-xs text-[#B0B0B5] break-all leading-relaxed bg-black/60 p-2 sm:p-2.5 border border-white/[0.04]">
                   {steps[activeStep].payload}
                 </div>
               </div>
@@ -482,20 +399,20 @@ function DePINFleetMatrix() {
     <section className="py-12 sm:py-16 bg-black relative">
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
         <FadeIn className="text-center flex flex-col items-center">
-          <p className="text-xs font-mono text-accent tracking-widest uppercase mb-2 sm:mb-3">
+          <p className="text-[13px] sm:text-xs font-mono text-accent tracking-widest uppercase mb-2 sm:mb-3">
             REAL-TIME COMPUTE TELEMETRY
           </p>
-          <h2 className="font-display font-bold text-3xl sm:text-4xl lg:text-5xl text-white tracking-tight">
+          <h2 className="font-display font-bold text-3xl sm:text-4xl lg:text-5xl text-white tracking-tight leading-tight">
             Verified Hardware Fleet.
           </h2>
-          <p className="mt-3 sm:mt-4 text-[#8E8E93] text-sm sm:text-base max-w-2xl leading-relaxed">
+          <p className="mt-3 sm:mt-4 text-[#A0A0A5] text-[15px] sm:text-base max-w-2xl leading-relaxed">
             Theron allocates exclusively to registered physical nodes with proven uptime and verified revenue history.
           </p>
 
           <div className="mt-6 sm:mt-8">
             <Link
               href="/app/nodes"
-              className="inline-flex items-center gap-2 border border-white/20 bg-white/5 hover:border-accent text-white hover:text-accent px-6 py-3 text-xs sm:text-sm font-mono transition-all group"
+              className="inline-flex items-center gap-2 border border-white/20 bg-white/5 hover:border-accent text-white hover:text-accent px-6 py-3 text-sm sm:text-sm font-mono transition-all group"
             >
               Explore All Registered Nodes
               <span className="group-hover:translate-x-1 transition-transform">→</span>
@@ -522,29 +439,29 @@ function RestakeVisualizer() {
         <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
           
           <FadeIn className="lg:col-span-6">
-            <p className="text-xs font-mono text-accent tracking-widest uppercase mb-2 sm:mb-3">
+            <p className="text-[13px] sm:text-xs font-mono text-accent tracking-widest uppercase mb-2 sm:mb-3">
               RESTAKING ENGINE
             </p>
-            <h2 className="font-display font-bold text-2xl sm:text-4xl text-white tracking-tight leading-tight">
+            <h2 className="font-display font-bold text-[26px] sm:text-3xl lg:text-4xl text-white tracking-tight leading-tight">
               Amplify Your Position. <br />
               <span className="text-accent">Up to 2.00× Yield Boost</span>.
             </h2>
-            <p className="mt-3 sm:mt-4 text-[#A0A0A5] text-sm sm:text-base leading-relaxed">
+            <p className="mt-3 sm:mt-4 text-[#A0A0A5] text-[15px] sm:text-base leading-relaxed">
               Commit your TRN shares to the Theron Restaking Protocol. By extending your lock duration, 
               you receive an amplified share of all node revenue streamed into the protocol.
             </p>
             
             <div className="mt-6 sm:mt-8 flex flex-col gap-2.5 sm:gap-3">
-              <div className="flex items-center gap-3 text-xs sm:text-sm text-[#C0C0C5]">
-                <span className="w-4 h-4 sm:w-5 sm:h-5 bg-accent/20 text-accent flex items-center justify-center text-xs font-bold font-mono shrink-0">✓</span>
+              <div className="flex items-center gap-3 text-sm sm:text-sm text-[#D0D0D5]">
+                <span className="w-5 h-5 bg-accent/20 text-accent flex items-center justify-center text-xs font-bold font-mono shrink-0">✓</span>
                 Smart Contract Enforced Multipliers
               </div>
-              <div className="flex items-center gap-3 text-xs sm:text-sm text-[#C0C0C5]">
-                <span className="w-4 h-4 sm:w-5 sm:h-5 bg-accent/20 text-accent flex items-center justify-center text-xs font-bold font-mono shrink-0">✓</span>
+              <div className="flex items-center gap-3 text-sm sm:text-sm text-[#D0D0D5]">
+                <span className="w-5 h-5 bg-accent/20 text-accent flex items-center justify-center text-xs font-bold font-mono shrink-0">✓</span>
                 Continuous Block-by-Block Yield Accrual
               </div>
-              <div className="flex items-center gap-3 text-xs sm:text-sm text-[#C0C0C5]">
-                <span className="w-4 h-4 sm:w-5 sm:h-5 bg-accent/20 text-accent flex items-center justify-center text-xs font-bold font-mono shrink-0">✓</span>
+              <div className="flex items-center gap-3 text-sm sm:text-sm text-[#D0D0D5]">
+                <span className="w-5 h-5 bg-accent/20 text-accent flex items-center justify-center text-xs font-bold font-mono shrink-0">✓</span>
                 Non-Custodial Auto-Compounding
               </div>
             </div>
@@ -557,7 +474,7 @@ function RestakeVisualizer() {
                 <span className="text-xs font-mono text-accent uppercase tracking-wider">
                   YIELD MULTIPLIER SIMULATOR
                 </span>
-                <span className="text-[11px] font-mono text-[#777]">
+                <span className="text-xs font-mono text-[#8E8E95]">
                   REAL-TIME CALCULATION
                 </span>
               </div>
@@ -570,14 +487,14 @@ function RestakeVisualizer() {
                     <button
                       key={tier.lock}
                       onClick={() => setSelectedTier(idx)}
-                      className={`p-2.5 sm:p-3.5 border text-center transition-all ${
+                      className={`p-3 sm:p-3.5 border text-center transition-all ${
                         active
                           ? "bg-accent/15 border-accent text-accent shadow-[0_0_16px_rgba(255,168,0,0.2)]"
-                          : "bg-white/[0.03] border-white/10 text-[#888] hover:border-white/20"
+                          : "bg-white/[0.03] border-white/10 text-[#9E9EA5] hover:border-white/20"
                       }`}
                     >
                       <div className="font-mono text-lg sm:text-xl font-bold">{tier.boost}</div>
-                      <div className="text-[11px] sm:text-xs mt-1 text-white font-medium">{tier.lock}</div>
+                      <div className="text-xs sm:text-xs mt-1 text-white font-medium">{tier.lock}</div>
                     </button>
                   );
                 })}
@@ -585,9 +502,9 @@ function RestakeVisualizer() {
 
               {/* Deposit Slider Simulation */}
               <div className="mb-5 sm:mb-6">
-                <div className="flex justify-between text-xs font-mono text-[#8E8E95] mb-2">
+                <div className="flex justify-between text-xs sm:text-xs font-mono text-[#A0A0A5] mb-2">
                   <span>SIMULATED PRINCIPAL</span>
-                  <span className="text-white font-bold">{depositAmount} BOT</span>
+                  <span className="text-white font-bold text-sm">{depositAmount} BOT</span>
                 </div>
                 <input
                   type="range"
@@ -603,14 +520,14 @@ function RestakeVisualizer() {
               {/* Output Result */}
               <div className="p-3.5 sm:p-4 bg-black border border-white/[0.08] flex items-center justify-between">
                 <div>
-                  <div className="text-[10px] sm:text-[11px] font-mono text-[#7A7A85]">EFFECTIVE YIELD WEIGHT</div>
+                  <div className="text-[11px] sm:text-[11px] font-mono text-[#8E8E95]">EFFECTIVE YIELD WEIGHT</div>
                   <div className="text-base sm:text-lg font-bold text-white font-mono">
                     {(depositAmount * multiplier).toFixed(0)} BOT Effective
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="text-[10px] sm:text-[11px] font-mono text-accent">BOOST RATE</div>
-                  <div className="text-lg sm:text-xl font-black text-accent font-display">
+                  <div className="text-[11px] sm:text-[11px] font-mono text-accent">BOOST RATE</div>
+                  <div className="text-xl sm:text-xl font-black text-accent font-display">
                     {restakeTiers[selectedTier]?.boost}
                   </div>
                 </div>
@@ -619,7 +536,7 @@ function RestakeVisualizer() {
               <div className="mt-5 sm:mt-6 text-center">
                 <Link
                   href="/app/restake"
-                  className="w-full inline-block bg-accent text-black font-semibold py-3 hover:bg-[#ffb726] transition-all text-sm tracking-wide shadow-lg font-mono border border-accent"
+                  className="w-full inline-block bg-accent text-black font-semibold py-3.5 hover:bg-[#ffb726] transition-all text-[15px] sm:text-sm tracking-wide shadow-lg font-mono border border-accent"
                 >
                   Enter Restake Vault →
                 </Link>
@@ -645,13 +562,13 @@ function StreamingDecisions() {
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 items-center">
           
           <FadeIn className="lg:col-span-5">
-            <p className="text-xs font-mono text-accent tracking-widest uppercase mb-2 sm:mb-3">
+            <p className="text-[13px] sm:text-xs font-mono text-accent tracking-widest uppercase mb-2 sm:mb-3">
               LIVE SIGNATURE REGISTRY
             </p>
-            <h2 className="font-display font-bold text-2xl sm:text-4xl text-white tracking-tight leading-tight">
+            <h2 className="font-display font-bold text-[26px] sm:text-3xl lg:text-4xl text-white tracking-tight leading-tight">
               Every Decision Logged On-Chain.
             </h2>
-            <p className="mt-3 sm:mt-4 text-[#A0A0A5] text-sm sm:text-base leading-relaxed">
+            <p className="mt-3 sm:mt-4 text-[#A0A0A5] text-[15px] sm:text-base leading-relaxed">
               No black boxes. When Theron evaluates nodes, rebalances liquidity, or triggers safety checks, 
               an intent hash and rationale are committed directly to the smart contract.
             </p>
@@ -659,7 +576,7 @@ function StreamingDecisions() {
             <div className="mt-6 sm:mt-8">
               <Link
                 href="/app/decisions"
-                className="inline-flex items-center gap-2 border border-white/20 bg-white/5 hover:border-accent text-white hover:text-accent px-5 sm:px-6 py-3 text-xs sm:text-sm font-mono transition-all"
+                className="inline-flex items-center gap-2 border border-white/20 bg-white/5 hover:border-accent text-white hover:text-accent px-5 sm:px-6 py-3 text-sm sm:text-sm font-mono transition-all"
               >
                 Inspect All AI Signatures →
               </Link>
@@ -670,11 +587,11 @@ function StreamingDecisions() {
           <FadeIn delay={0.15} className="lg:col-span-7">
             <div className="border border-white/15 bg-[#0a0a0d] shadow-2xl overflow-hidden">
               <div className="flex items-center justify-between px-4 sm:px-6 py-3.5 sm:py-4 border-b border-white/[0.08] bg-[#0f0f13]">
-                <span className="text-[11px] sm:text-xs font-mono text-[#8E8E95] uppercase tracking-wider flex items-center gap-2">
+                <span className="text-xs sm:text-xs font-mono text-[#8E8E95] uppercase tracking-wider flex items-center gap-2">
                   <span className="w-2 h-2 bg-accent animate-ping" />
                   DECISION STREAM
                 </span>
-                <span className="text-[11px] sm:text-xs font-mono text-accent">
+                <span className="text-xs sm:text-xs font-mono text-accent">
                   BOT CHAIN L1
                 </span>
               </div>
@@ -684,14 +601,14 @@ function StreamingDecisions() {
                   decisions.slice(0, 4).map((d) => (
                     <div key={d.id} className="p-4 sm:p-5 hover:bg-white/[0.02] transition-colors">
                       <div className="flex items-center justify-between mb-1.5">
-                        <span className={`font-mono text-[11px] sm:text-xs font-bold px-2 py-0.5 ${
+                        <span className={`font-mono text-xs sm:text-xs font-bold px-2 py-0.5 ${
                           d.category === "underwrite"
                             ? "bg-accent/10 text-accent border border-accent/30"
                             : "bg-primary/10 text-primary-hover border border-primary/30"
                         }`}>
                           [{d.category.toUpperCase()}]
                         </span>
-                        <span className="font-mono text-[11px] sm:text-xs text-[#6A6A75]">
+                        <span className="font-mono text-xs sm:text-xs text-[#8E8E95]">
                           {new Date(d.timestamp * 1000).toLocaleTimeString([], {
                             hour: "2-digit",
                             minute: "2-digit",
@@ -699,19 +616,19 @@ function StreamingDecisions() {
                           })}
                         </span>
                       </div>
-                      <p className="text-xs sm:text-sm font-mono text-[#D0D0D5] leading-relaxed break-words">
+                      <p className="text-sm sm:text-sm font-mono text-[#E0E0E5] leading-relaxed break-words">
                         {d.summary}
                       </p>
                     </div>
                   ))
                 ) : (
-                  <div className="p-6 text-center text-xs font-mono text-[#777]">
+                  <div className="p-6 text-center text-xs sm:text-sm font-mono text-[#888]">
                     Polling live smart contract signatures...
                   </div>
                 )}
               </div>
 
-              <div className="px-4 sm:px-6 py-3 border-t border-white/[0.08] bg-[#0f0f13] flex items-center justify-between text-[11px] sm:text-xs font-mono text-[#6A6A75]">
+              <div className="px-4 sm:px-6 py-3 border-t border-white/[0.08] bg-[#0f0f13] flex items-center justify-between text-xs sm:text-xs font-mono text-[#8E8E95]">
                 <span>CONTRACT: AISignatureRegistry</span>
                 <a href="https://scan.botchain.ai" target="_blank" rel="noopener noreferrer" className="hover:text-accent text-accent/80 transition-colors">
                   Explorer ↗
@@ -753,13 +670,13 @@ function SecurityFramework() {
     <section className="py-12 sm:py-16 bg-black relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <FadeIn className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
-          <p className="text-xs font-mono text-accent tracking-widest uppercase mb-3">
+          <p className="text-[13px] sm:text-xs font-mono text-accent tracking-widest uppercase mb-3">
             INSTITUTIONAL RISK MANAGEMENT
           </p>
-          <h2 className="font-display font-bold text-2xl sm:text-4xl text-white tracking-tight">
+          <h2 className="font-display font-bold text-[26px] sm:text-3xl lg:text-4xl text-white tracking-tight leading-tight">
             Hard Constraints. Zero Compromise.
           </h2>
-          <p className="mt-3 sm:mt-4 text-[#8E8E93] text-sm sm:text-base leading-relaxed">
+          <p className="mt-3 sm:mt-4 text-[#A0A0A5] text-[15px] sm:text-base leading-relaxed">
             The AI operates strictly within programmatic bounds verified by smart contracts. No human intervention can bypass safety guardrails.
           </p>
         </FadeIn>
@@ -773,7 +690,7 @@ function SecurityFramework() {
                     0{i + 1}
                   </div>
                   <h3 className="font-display font-bold text-base sm:text-lg text-white mb-2">{s.title}</h3>
-                  <p className="text-xs text-[#9E9EA5] leading-relaxed">{s.desc}</p>
+                  <p className="text-sm sm:text-xs text-[#A0A0A5] leading-relaxed">{s.desc}</p>
                 </div>
               </div>
             </FadeIn>
@@ -806,17 +723,17 @@ function ProtocolMetricsRadar() {
     <section className="py-12 sm:py-16 bg-black relative">
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
         <FadeIn className="text-center mb-7 sm:mb-10">
-          <p className="text-xs font-mono text-accent tracking-widest uppercase mb-2">LIVE METRICS</p>
-          <h2 className="font-display font-bold text-2xl sm:text-4xl text-white">By the Numbers</h2>
+          <p className="text-[13px] sm:text-xs font-mono text-accent tracking-widest uppercase mb-2">LIVE METRICS</p>
+          <h2 className="font-display font-bold text-[26px] sm:text-3xl lg:text-4xl text-white">By the Numbers</h2>
         </FadeIn>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
           {metrics.map((m, i) => (
             <FadeIn key={m.label} delay={i * 0.08} className="text-center p-4 sm:p-6 bg-[#0a0a0d] border border-white/[0.06]">
-              <div className="font-display font-bold text-2xl sm:text-4xl text-white mb-1.5 sm:mb-2">
+              <div className="font-display font-bold text-3xl sm:text-4xl text-white mb-1.5 sm:mb-2">
                 {m.value}
               </div>
-              <div className="text-[10px] sm:text-[11px] text-[#7A7A82] font-mono tracking-wider uppercase">
+              <div className="text-xs sm:text-[11px] text-[#8E8E95] font-mono tracking-wider uppercase">
                 {m.label}
               </div>
             </FadeIn>
@@ -858,8 +775,8 @@ function FAQSection() {
     <section className="py-12 sm:py-16 bg-black relative">
       <div className="max-w-3xl mx-auto px-4 sm:px-6">
         <FadeIn className="text-center mb-7 sm:mb-10">
-          <p className="text-xs font-mono text-accent tracking-widest uppercase mb-2">DOCUMENTATION & FAQ</p>
-          <h2 className="font-display font-bold text-2xl sm:text-4xl text-white">Frequently Asked Questions</h2>
+          <p className="text-[13px] sm:text-xs font-mono text-accent tracking-widest uppercase mb-2">DOCUMENTATION & FAQ</p>
+          <h2 className="font-display font-bold text-[26px] sm:text-3xl lg:text-4xl text-white">Frequently Asked Questions</h2>
         </FadeIn>
 
         <FadeIn delay={0.05}>
@@ -881,7 +798,7 @@ function FAQAccordion({ faqs }: { faqs: { q: string; a: string }[] }) {
             onClick={() => setOpenIdx(openIdx === i ? null : i)}
             className="w-full flex items-center justify-between py-4 sm:py-5 text-left gap-4 group"
           >
-            <span className="text-sm sm:text-base font-medium text-white group-hover:text-accent transition-colors">{f.q}</span>
+            <span className="text-[16px] sm:text-base font-medium text-white group-hover:text-accent transition-colors leading-snug">{f.q}</span>
             <span className={`text-accent text-xl sm:text-2xl transition-transform duration-300 shrink-0 ${openIdx === i ? "rotate-45" : ""}`}>
               +
             </span>
@@ -890,7 +807,7 @@ function FAQAccordion({ faqs }: { faqs: { q: string; a: string }[] }) {
             <motion.p
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
-              className="pb-5 sm:pb-6 text-xs sm:text-sm text-[#A0A0A5] leading-relaxed"
+              className="pb-5 sm:pb-6 text-sm sm:text-sm text-[#B0B0B5] leading-relaxed"
             >
               {f.a}
             </motion.p>
