@@ -5,11 +5,11 @@ import { defineChain, mainnet, arbitrum, polygon, bsc } from '@reown/appkit/netw
 // WalletConnect / Reown project ID
 export const projectId = process.env.NEXT_PUBLIC_WC_PROJECT_ID || 'b56e18d47c72ab683b10814fe9495694';
 
-export const botChainTestnet = defineChain({
-  id: 968,
-  caipNetworkId: 'eip155:968',
+export const botChain = defineChain({
+  id: 677,
+  caipNetworkId: 'eip155:677',
   chainNamespace: 'eip155',
-  name: 'BOT Chain Testnet',
+  name: 'BOT Chain',
   nativeCurrency: {
     name: 'BOT',
     symbol: 'BOT',
@@ -17,18 +17,18 @@ export const botChainTestnet = defineChain({
   },
   rpcUrls: {
     default: {
-      http: ['https://rpc.bohr.life'],
+      http: ['https://rpc.botchain.ai'],
     },
   },
   blockExplorers: {
     default: {
-      name: 'BohrScan',
-      url: 'https://scan.bohr.life',
+      name: 'BOTScan',
+      url: 'https://scan.botchain.ai',
     },
   },
 });
 
-export const networks = [botChainTestnet, mainnet, arbitrum, polygon, bsc];
+export const networks = [botChain, mainnet, arbitrum, polygon, bsc];
 
 // Set up the Wagmi Adapter
 export const wagmiAdapter = new WagmiAdapter({
@@ -39,7 +39,7 @@ export const wagmiAdapter = new WagmiAdapter({
   projectId,
   networks,
   transports: {
-    [botChainTestnet.id]: http('https://rpc.bohr.life'),
+    [botChain.id]: http('https://rpc.botchain.ai'),
     [mainnet.id]: http(),
     [arbitrum.id]: http(),
     [polygon.id]: http(),

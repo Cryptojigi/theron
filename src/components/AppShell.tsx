@@ -72,11 +72,11 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   const { switchChain } = useSwitchChain();
 
   // Auto-switch: if a wallet connects on the wrong network (e.g. mainnet),
-  // ask it to switch/add BOT Chain Testnet (968) — with the user's approval.
+  // ask it to switch/add BOT Chain (677) — with the user's approval.
   useEffect(() => {
-    if (isConnected && chainId && chainId !== 968) {
+    if (isConnected && chainId && chainId !== 677) {
       try {
-        switchChain({ chainId: 968 });
+        switchChain({ chainId: 677 });
       } catch {
         /* user declined — they can switch manually */
       }

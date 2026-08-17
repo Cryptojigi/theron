@@ -38,13 +38,13 @@ export default function FundPage() {
     ? Number(balanceData.value) / 10 ** balanceData.decimals
     : 0;
   const trnBalance = Number(portfolio?.balance || 0);
-  const isWrongNetwork = isConnected && chainId !== 968;
+  const isWrongNetwork = isConnected && chainId !== 677;
 
   const amountNum = Number(amount);
   let guard: string | null = null;
   if (!isConnected) guard = "Connect your wallet first";
   else if (isWrongNetwork)
-    guard = `Wrong network — your wallet reports chain ID ${chainId ?? "unknown"} (needs 968)`;
+    guard = `Wrong network — your wallet reports chain ID ${chainId ?? "unknown"} (needs 677)`;
   else if (attempted && (!amount || isNaN(amountNum) || amountNum <= 0))
     guard = "Enter an amount";
   else if (action === "Deposit" && amountNum > botBalance)
@@ -207,10 +207,10 @@ export default function FundPage() {
                 {guard}
                 {isWrongNetwork && (
                   <button
-                    onClick={() => switchChain({ chainId: 968 })}
+                    onClick={() => switchChain({ chainId: 677 })}
                     className="mt-2 w-full bg-accent text-black text-xs font-medium px-3 py-2 btn hover:opacity-90 transition-opacity"
                   >
-                    Switch to BOT Chain Testnet (968)
+                    Switch to BOT Chain (677)
                   </button>
                 )}
               </div>

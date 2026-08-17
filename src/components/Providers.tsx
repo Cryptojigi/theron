@@ -2,7 +2,7 @@
 
 import { WagmiProvider } from 'wagmi';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { wagmiAdapter, projectId, botChainTestnet, networks } from '@/lib/wagmi';
+import { wagmiAdapter, projectId, botChain, networks } from '@/lib/wagmi';
 import { createAppKit } from '@reown/appkit/react';
 import React from 'react';
 
@@ -45,7 +45,7 @@ createAppKit({
   adapters: [wagmiAdapter],
   projectId,
   networks: networks as any,
-  defaultNetwork: botChainTestnet,
+  defaultNetwork: botChain,
   metadata,
   allowUnsupportedChain: true,
   featuredWalletIds,
