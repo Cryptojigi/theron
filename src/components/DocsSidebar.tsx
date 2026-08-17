@@ -57,6 +57,30 @@ export default function DocsSidebar({ onNavigate }: { onNavigate?: () => void })
             </div>
           );
         })}
+
+        {/* Legal links (top-level pages, outside /docs) */}
+        <div className="mt-4 pt-4 border-t border-border">
+          <span className="block px-4 py-1.5 text-[11px] font-mono tracking-widest uppercase text-dim">
+            Legal
+          </span>
+          <ul className="mt-1">
+            {[
+              { href: "/terms", title: "Terms of Service" },
+              { href: "/privacy", title: "Privacy Policy" },
+              { href: "/risk", title: "Risk Disclosure" },
+            ].map((l) => (
+              <li key={l.href}>
+                <Link
+                  href={l.href}
+                  onClick={onNavigate}
+                  className="block px-4 py-1.5 text-[13px] text-muted border-l-2 border-transparent hover:text-text hover:border-border transition-colors"
+                >
+                  {l.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
       </nav>
     </aside>
   );
