@@ -1,12 +1,12 @@
 # THERON — The AI Fund Manager
 
-An AI-managed RWA fund on BOT Chain. Money sits idle. Markets are slow. Humans are slower — THERON is an autonomous agent that moves capital into real DePIN infrastructure (GPUs, CPUs, compute nodes) and streams the returns back.
+An AI-managed RWA fund on BOT Chain. Money sits idle. Markets are slow. Humans are slower. THERON is an autonomous agent that moves capital into real DePIN infrastructure (GPUs, CPUs, compute nodes) and streams the returns back.
 
-**Core principle: zero simulation.** Every number the agent uses comes from real on-chain state and the live block explorer.
+**Core principle: every figure shown comes from live on-chain state and the public block explorer. No estimated or placeholder numbers.**
 
 ## Live Demo
 
-[BOT Chain testnet (968) — live app](http://145.241.206.217)
+[Theron — live app on BOT Chain mainnet](https://theronfund.duckdns.org)
 
 ## How it works
 
@@ -23,12 +23,12 @@ poll chain → underwrite nodes → allocate capital → rebalance
 | **Allocator** | Moves capital to nodes that pass the underwriting threshold |
 | **Rebalancer** | Shifts capital from underperforming to top-performing nodes |
 
-Every AI decision (underwrite / allocate / rebalance) is recorded on-chain with its intent hash — a verifiable audit trail of the agent's behavior.
+Every AI decision (underwrite / allocate / rebalance) is recorded on-chain with its intent hash, a verifiable audit trail of the agent's behavior.
 
 ## Repository structure
 
 ```
-├── contracts/     # 7 Solidity contracts (Foundry) — 61 tests passing
+├── contracts/     # 7 Solidity contracts (Foundry) — 62 tests passing
 ├── backend/       # TypeScript AI agent — Express API + decision loop
 └── src/           # Next.js frontend — wagmi wallet connect, live data
 ```
@@ -41,7 +41,7 @@ Every AI decision (underwrite / allocate / rebalance) is recorded on-chain with 
 - `YieldDistributor` — yield claim engine
 - `Restaking` — restake yield for up to 2× boost
 - `AISignatureRegistry` — on-chain record of every AI decision
-- `EmergencyGuard` — 3-guardian circuit breaker
+- `EmergencyGuard` — 2-of-3 guardian circuit breaker
 
 ## Getting started
 
@@ -49,7 +49,7 @@ Every AI decision (underwrite / allocate / rebalance) is recorded on-chain with 
 # Contracts (Foundry)
 cd contracts
 forge build
-forge test          # 61 tests
+forge test          # 62 tests
 
 # Backend
 cd backend
@@ -66,4 +66,4 @@ npm run dev
 
 ## Deployment
 
-Deployed on **BOT Chain testnet (chain 968)**. Deployment records (transactions, addresses) live in `contracts/broadcast/`.
+Deployed on **BOT Chain mainnet (chain 677)**. All contracts are verified on the public explorer. Deployment records (transactions, addresses) live in `contracts/broadcast/`.

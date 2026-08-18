@@ -58,9 +58,23 @@ export default function DocsSidebar({ onNavigate }: { onNavigate?: () => void })
           );
         })}
 
-        {/* Legal links (top-level pages, outside /docs) */}
+        {/* Whitepaper + Legal links (top-level pages, outside /docs) */}
         <div className="mt-4 pt-4 border-t border-border">
           <span className="block px-4 py-1.5 text-[11px] font-mono tracking-widest uppercase text-dim">
+            Whitepaper
+          </span>
+          <ul className="mt-1">
+            <li>
+              <Link
+                href="/whitepaper"
+                onClick={onNavigate}
+                className="block px-4 py-1.5 text-[13px] text-muted border-l-2 border-transparent hover:text-text hover:border-border transition-colors"
+              >
+                Theron: a guardrailed capital allocator
+              </Link>
+            </li>
+          </ul>
+          <span className="block px-4 py-1.5 mt-2 text-[11px] font-mono tracking-widest uppercase text-dim">
             Legal
           </span>
           <ul className="mt-1">
