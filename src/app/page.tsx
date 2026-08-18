@@ -715,7 +715,7 @@ function ProtocolMetricsRadar() {
   const metrics = [
     { label: "NODES UNDERWRITTEN", value: <CountUp target={activeNodes} /> },
     { label: "AI DECISIONS LOGGED", value: <CountUp target={decisionsMade} /> },
-    { label: "TOTAL VALUE LOCKED", value: <CountUp target={stats?.tvl || 0} suffix=" BOT" /> },
+    { label: "TOTAL VALUE LOCKED", value: <CountUp target={stats?.tvl || 0} suffix=" BOT" decimals={2} /> },
     { label: "BLOCK SETTLEMENT TIME", value: <span>0.75s</span> },
   ];
 

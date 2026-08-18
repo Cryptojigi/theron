@@ -124,7 +124,7 @@ export default function FundPage() {
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         <StatCard label="Net Asset Value" value={`${stats?.nav?.toFixed(3) || "1.000"} BOT`} loading={statsLoading} />
-        <StatCard label="TVL" value={`${stats?.tvl?.toLocaleString(undefined, { maximumFractionDigits: 0 }) || "0"} BOT`} accent loading={statsLoading} />
+        <StatCard label="TVL" value={`${stats?.tvl?.toLocaleString(undefined, { maximumFractionDigits: 2 }) || "0"} BOT`} accent loading={statsLoading} />
         <StatCard label="APY" value="n/a" accent loading={statsLoading} />
         <StatCard label="Yield / block" value={`${stats?.yieldPerBlock || 0} BOT`} mono loading={statsLoading} />
       </div>
