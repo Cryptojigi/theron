@@ -8,11 +8,9 @@ import React from 'react';
 
 const queryClient = new QueryClient();
 
-// Dynamic origin detection ensures WalletConnect doesn't fail origin check on mobile / localhost / production
+// Use a stable HTTPS URL for WalletConnect metadata. 
+// MetaMask mobile often rejects IP addresses or HTTP origins via deep links.
 const getDappUrl = () => {
-  if (typeof window !== 'undefined' && window.location.origin) {
-    return window.location.origin;
-  }
   return 'https://theronfund.duckdns.org';
 };
 
@@ -69,7 +67,7 @@ createAppKit({
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <WagmiProvider config={wagmiAdapter.wagmiConfig} reconnectOnMount={false}>
+    <WagmiProvider config={wagmiAdapter.wagmiConfig}>
       <QueryClientProvider client={queryClient}>
         {children}
       </QueryClientProvider>
