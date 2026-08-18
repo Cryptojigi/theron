@@ -67,7 +67,7 @@ createAppKit({
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <WagmiProvider config={wagmiAdapter.wagmiConfig}>
+    <WagmiProvider config={wagmiAdapter.wagmiConfig} reconnectOnMount={false}>
       <QueryClientProvider client={queryClient}>
         {children}
       </QueryClientProvider>

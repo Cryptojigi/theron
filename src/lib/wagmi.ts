@@ -3,7 +3,7 @@ import { WagmiAdapter } from '@reown/appkit-adapter-wagmi';
 import { defineChain, mainnet, arbitrum, polygon, bsc } from '@reown/appkit/networks';
 
 // WalletConnect / Reown project ID
-export const projectId = process.env.NEXT_PUBLIC_WC_PROJECT_ID || 'b56e18d47c72ab683b10814fe9495694';
+export const projectId = process.env.NEXT_PUBLIC_WC_PROJECT_ID || '28814c1abe6991a25160016ecbba2159';
 
 export const botChain = defineChain({
   id: 677,
