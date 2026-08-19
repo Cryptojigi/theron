@@ -128,8 +128,8 @@ export default function RestakePage() {
 
   const tier = restakeTiers[selected];
   // APY is n/a per anti-slop rules
-  const baseApy = "n/a";
-  const boosted = "n/a";
+  const baseApy = "—";
+  const boosted = "—";
 
   return (
     <AppShell>

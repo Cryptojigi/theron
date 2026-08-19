@@ -125,7 +125,7 @@ export default function FundPage() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         <StatCard label="Net Asset Value" value={`${stats?.nav?.toFixed(3) || "1.000"} BOT`} loading={statsLoading} />
         <StatCard label="TVL" value={`${stats?.tvl?.toLocaleString(undefined, { maximumFractionDigits: 2 }) || "0"} BOT`} accent loading={statsLoading} />
-        <StatCard label="APY" value="n/a" accent loading={statsLoading} />
+        <StatCard label="APY" value="—" accent loading={statsLoading} />
         <StatCard label="Yield / block" value={`${stats?.yieldPerBlock || 0} BOT`} mono loading={statsLoading} />
       </div>
 
@@ -228,15 +228,13 @@ export default function FundPage() {
             {successMsg && <div className="mt-4 text-xs text-accent">{successMsg}</div>}
           </section>
 
-          {/* Allocation chart */}
+          {/* Allocation chart — real on-chain state only */}
           <section className="border border-border bg-surface p-6">
             <h2 className="font-display text-lg text-text mb-5">Capital Allocation</h2>
             <div className="space-y-4">
               {[
-                { label: "GPU: H100 class", pct: 42, color: "bg-primary" },
-                { label: "GPU: A100/L40S", pct: 28, color: "bg-accent" },
-                { label: "CPU: EPYC/Xeon", pct: 22, color: "bg-primary/50" },
-                { label: "Reserve / USDT", pct: 8, color: "bg-muted/50" },
+                { label: "Vault (idle)", pct: 100, color: "bg-muted/50" },
+                { label: "Deployed to nodes", pct: 0, color: "bg-accent" },
               ].map((row) => (
                 <div key={row.label}>
                   <div className="flex justify-between text-sm mb-1.5">
@@ -249,6 +247,13 @@ export default function FundPage() {
                 </div>
               ))}
             </div>
+            <p className="mt-4 text-xs text-dim leading-relaxed">
+              {nodes?.length
+                ? "Nodes are registered and being underwritten. Allocation activates on-chain only when a node clears the 95% uptime and revenue bar."
+                : "No capital deployed yet. The fund allocates only into nodes that clear the underwriting bar. All "
+                  + `${stats?.tvl ? stats.tvl.toLocaleString(undefined, { maximumFractionDigits: 2 }) : "funds"} BOT currently sit in the vault.`
+                  + " Per-node allocation will appear here once capital is deployed on-chain."}
+            </p>
           </section>
         </div>
 
