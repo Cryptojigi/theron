@@ -189,6 +189,10 @@ export default function RestakePage() {
               <span className="text-text">Boosted APY</span>
               <span className="text-accent font-mono">{boosted}</span>
             </div>
+            <p className="text-[11px] text-dim leading-relaxed pt-2">
+              The yield engine is not live yet. This page shows the contract-defined boost structure;
+              real rates will display once the revenue channel activates.
+            </p>
           </div>
 
           <div className="flex gap-2">
@@ -268,8 +272,8 @@ export default function RestakePage() {
           <div className="border border-border bg-surface p-6">
             <h2 className="font-display text-lg text-text mb-3">Why restake?</h2>
             <p className="text-sm text-muted leading-relaxed">
-              Restaked TRN earns up to 2× the base yield. Your boost applies to new yield instantly and
-              compounds the machine economy, not just your principal.
+              When the yield engine activates, restaked TRN earns up to 2× the base yield, and your boost
+              applies to new yield instantly, compounding the machine economy, not just your principal.
             </p>
           </div>
         </div>

@@ -261,15 +261,15 @@ export default function FundPage() {
         <div className="space-y-6">
           <div className="border border-border bg-surface p-6">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-sm text-text font-medium">Live Yield</h3>
-              <span className="text-xs font-mono text-accent flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 bg-accent animate-pulse" /> STREAMING
+              <h3 className="text-sm text-text font-medium">Yield Engine</h3>
+              <span className="text-xs font-mono text-dim">
+                ROADMAP
               </span>
             </div>
             <div className="font-display text-3xl text-accent mb-2">
               {statsLoading ? <Skeleton className="h-8 w-24" /> : `+${stats?.yieldPerBlock || 0} BOT`}
             </div>
-            <p className="text-xs text-dim">earned in the last block (0.75s)</p>
+            <p className="text-xs text-dim">yield per block (0.75s block time)</p>
             <div className="mt-5 pt-4 border-t border-border space-y-2 text-sm">
               <Row label="Your TRN" value={portfolio?.balance?.toString() || "0.00"} mono />
               <Row label="TRN price" value={stats?.trnPrice ? `$${stats.trnPrice.toFixed(2)}` : "—"} mono />

@@ -98,7 +98,7 @@ export const DOCS: Record<string, Doc> = {
             <li><span className="text-text font-medium">Deposit &amp; Mint</span>: deposit BOT, receive TRN at NAV.</li>
             <li><span className="text-text font-medium">AI Underwriting</span>: the AI scores real compute nodes on live telemetry.</li>
             <li><span className="text-text font-medium">Capital Allocation</span>: capital flows only into nodes that clear the bar.</li>
-            <li><span className="text-text font-medium">Revenue &amp; NAV Growth</span>: real revenue streams back to TRN holders.</li>
+            <li><span className="text-text font-medium">Revenue &amp; NAV Growth</span>: machine revenue routed to TRN holders once the yield engine activates.</li>
           </ol>
         ),
       },
@@ -178,7 +178,7 @@ export const DOCS: Record<string, Doc> = {
     slug: "restake",
     title: "Restake & Boost",
     breadcrumb: "Getting Started",
-    intro: "Lock TRN to amplify your yield share.",
+    intro: "Lock TRN to amplify your yield share once the yield engine activates. The boost structure is defined in the contract; no returns are currently generated.",
     sections: [
       {
         id: "tiers",

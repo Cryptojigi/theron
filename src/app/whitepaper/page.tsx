@@ -261,8 +261,9 @@ export default function WhitepaperPage() {
               <ul className="list-disc pl-5 space-y-2">
                 <li>
                   Build the yield engine: the fund&apos;s revenue channel from
-                  real compute income, with native staking as a complementary
-                  lever as BOT Chain matures.
+                  real compute income is not yet active on mainnet, and no
+                  returns are currently generated. Native staking will serve
+                  as a complementary lever as BOT Chain matures.
                 </li>
                 <li>
                   Grow the registered operator set with verified DePIN
