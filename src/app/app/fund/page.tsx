@@ -44,13 +44,13 @@ export default function FundPage() {
   let guard: string | null = null;
   if (!isConnected) guard = "Connect your wallet first";
   else if (isWrongNetwork)
-    guard = `Wrong network — your wallet reports chain ID ${chainId ?? "unknown"} (needs 677)`;
+    guard = `Wrong network: your wallet reports chain ID ${chainId ?? "unknown"} (needs 677)`;
   else if (attempted && (!amount || isNaN(amountNum) || amountNum <= 0))
     guard = "Enter an amount";
   else if (action === "Deposit" && amountNum > botBalance)
-    guard = `Insufficient BOT balance — you have ${botBalance.toFixed(4)} BOT`;
+    guard = `Insufficient BOT balance: you have ${botBalance.toFixed(4)} BOT`;
   else if (action === "Withdraw" && amountNum > trnBalance)
-    guard = `Insufficient TRN balance — you have ${trnBalance.toFixed(4)} TRN`;
+    guard = `Insufficient TRN balance: you have ${trnBalance.toFixed(4)} TRN`;
 
   const handleTx = async () => {
     if (!amount || isNaN(Number(amount)) || Number(amount) <= 0) {
@@ -142,7 +142,7 @@ export default function FundPage() {
                   onClick={() => {
                     setAction(t);
                     setAttempted(false);
-                    setAmount(""); // different units per tab (BOT vs TRN) — start fresh
+                    setAmount(""); // different units per tab (BOT vs TRN), start fresh
                   }}
                   className={`px-4 py-2 text-sm btn border ${
                     action === t
@@ -184,7 +184,7 @@ export default function FundPage() {
                     type="button"
                     onPointerDown={(e) => {
                       // Fire before the input's blur hides this button (classic
-                      // unmount-before-click bug) — also keep the input focused.
+                      // unmount-before-click bug), also keep the input focused.
                       e.preventDefault();
                       fillMax();
                     }}
@@ -233,9 +233,9 @@ export default function FundPage() {
             <h2 className="font-display text-lg text-text mb-5">Capital Allocation</h2>
             <div className="space-y-4">
               {[
-                { label: "GPU — H100 class", pct: 42, color: "bg-primary" },
-                { label: "GPU — A100/L40S", pct: 28, color: "bg-accent" },
-                { label: "CPU — EPYC/Xeon", pct: 22, color: "bg-primary/50" },
+                { label: "GPU: H100 class", pct: 42, color: "bg-primary" },
+                { label: "GPU: A100/L40S", pct: 28, color: "bg-accent" },
+                { label: "CPU: EPYC/Xeon", pct: 22, color: "bg-primary/50" },
                 { label: "Reserve / USDT", pct: 8, color: "bg-muted/50" },
               ].map((row) => (
                 <div key={row.label}>

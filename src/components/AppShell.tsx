@@ -72,13 +72,13 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   const { switchChain } = useSwitchChain();
 
   // Auto-switch: if a wallet connects on the wrong network (e.g. mainnet),
-  // ask it to switch/add BOT Chain (677) — with the user's approval.
+  // ask it to switch/add BOT Chain (677), with the user's approval.
   useEffect(() => {
     if (isConnected && chainId && chainId !== 677) {
       try {
         switchChain({ chainId: 677 });
       } catch {
-        /* user declined — they can switch manually */
+        /* user declined; they can switch manually */
       }
     }
   }, [isConnected, chainId, switchChain]);
@@ -237,7 +237,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         })}
       </nav>
 
-      {/* Main content — scrolls independently; sidebar stays fixed */}
+      {/* Main content: scrolls independently; sidebar stays fixed */}
       <main className="flex-1 min-w-0 overflow-y-auto px-4 sm:px-8 py-8 pb-24 lg:pb-8">
         <div className="max-w-6xl mx-auto">{children}</div>
       </main>

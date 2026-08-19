@@ -1,7 +1,7 @@
 import React from "react";
 
 /* ────────────────────────────────────────────────────────────
-   Theron Documentation — content map + sidebar navigation
+   Theron Documentation: content map + sidebar navigation
    Lean structure, only sections that apply to Theron.
    ──────────────────────────────────────────────────────────── */
 
@@ -84,7 +84,7 @@ export const DOCS: Record<string, Doc> = {
         body: (
           <p>
             Theron is a tokenized fund on BOT Chain. Users deposit the network's
-            native asset and receive <M>TRN</M> — a yield-bearing share representing
+            native asset and receive <M>TRN</M>: a yield-bearing share representing
             their pro-rata ownership. The fund is managed by an on-chain AI
             underwriting engine rather than a human team.
           </p>
@@ -95,10 +95,10 @@ export const DOCS: Record<string, Doc> = {
         heading: "How It Works",
         body: (
           <ol className="space-y-2 list-decimal pl-5">
-            <li><span className="text-text font-medium">Deposit &amp; Mint</span> — deposit BOT, receive TRN at NAV.</li>
-            <li><span className="text-text font-medium">AI Underwriting</span> — the AI scores real compute nodes on live telemetry.</li>
-            <li><span className="text-text font-medium">Capital Allocation</span> — capital flows only into nodes that clear the bar.</li>
-            <li><span className="text-text font-medium">Revenue &amp; NAV Growth</span> — real revenue streams back to TRN holders.</li>
+            <li><span className="text-text font-medium">Deposit &amp; Mint</span>: deposit BOT, receive TRN at NAV.</li>
+            <li><span className="text-text font-medium">AI Underwriting</span>: the AI scores real compute nodes on live telemetry.</li>
+            <li><span className="text-text font-medium">Capital Allocation</span>: capital flows only into nodes that clear the bar.</li>
+            <li><span className="text-text font-medium">Revenue &amp; NAV Growth</span>: real revenue streams back to TRN holders.</li>
           </ol>
         ),
       },
@@ -184,9 +184,9 @@ export const DOCS: Record<string, Doc> = {
         id: "tiers",
         heading: "Boost Tiers",
         body: bullets([
-          <><M>30 days</M> — 1.3× yield boost</>,
-          <><M>90 days</M> — 1.6× yield boost</>,
-          <><M>180 days</M> — 2.0× yield boost</>,
+          <><M>30 days</M>: 1.3× yield boost</>,
+          <><M>90 days</M>: 1.6× yield boost</>,
+          <><M>180 days</M>: 2.0× yield boost</>,
         ]),
       },
       {
@@ -214,13 +214,13 @@ export const DOCS: Record<string, Doc> = {
         heading: "The Contracts",
         body: (
           <ul className="space-y-2">
-            <li><span className="text-text font-medium">TheronFund</span> — ERC-4626 vault: deposit, withdraw, allocate, rebalance.</li>
-            <li><span className="text-text font-medium">TheronToken (TRN)</span> — the vault share token.</li>
-            <li><span className="text-text font-medium">NodeRegistry</span> — node registration, stake, uptime, revenue, slashing.</li>
-            <li><span className="text-text font-medium">YieldDistributor</span> — pro-rata revenue streaming.</li>
-            <li><span className="text-text font-medium">Restaking</span> — locks TRN for a yield boost.</li>
-            <li><span className="text-text font-medium">AISignatureRegistry</span> — on-chain audit trail of every AI decision.</li>
-            <li><span className="text-text font-medium">EmergencyGuard</span> — 2-of-3 circuit breaker for emergencies.</li>
+            <li><span className="text-text font-medium">TheronFund</span>: ERC-4626 vault: deposit, withdraw, allocate, rebalance.</li>
+            <li><span className="text-text font-medium">TheronToken (TRN)</span>: the vault share token.</li>
+            <li><span className="text-text font-medium">NodeRegistry</span>: node registration, stake, uptime, revenue, slashing.</li>
+            <li><span className="text-text font-medium">YieldDistributor</span>: pro-rata revenue streaming.</li>
+            <li><span className="text-text font-medium">Restaking</span>: locks TRN for a yield boost.</li>
+            <li><span className="text-text font-medium">AISignatureRegistry</span>: on-chain audit trail of every AI decision.</li>
+            <li><span className="text-text font-medium">EmergencyGuard</span>: 2-of-3 circuit breaker for emergencies.</li>
           </ul>
         ),
       },
@@ -299,8 +299,8 @@ export const DOCS: Record<string, Doc> = {
         body: (
           <p>
             Every verdict is hashed into an intent and stored in the{" "}
-            <M>AISignatureRegistry</M> with the AI's written summary — publicly
-            verifiable, and only re-written when the score actually changes.
+            <M>AISignatureRegistry</M> with the AI's written summary, which is publicly
+            verifiable and only re-written when the score actually changes.
           </p>
         ),
       },
@@ -347,14 +347,14 @@ export const DOCS: Record<string, Doc> = {
         heading: "Addresses",
         body: (
           <ul className="font-mono text-[13px] space-y-1.5 break-all">
-            <li>NodeRegistry — <M>0x40f611a9236f944dfea05cb20a5eb18d1eb87098</M></li>
-            <li>TheronFund — <M>0x4d4c6dcb8e93327c6d0f87511fc2c7da157fb313</M></li>
-            <li>TheronToken (TRN) — <M>0xa518acb211c5ecbb140d98a081c11cbc5ff56541</M></li>
-            <li>YieldDistributor — <M>0xed91291c10555b4573b051661c0ee7538df32008</M></li>
-            <li>Restaking — <M>0x4423bdeb10c0637a225ec32d762fd61c5fbf143b</M></li>
-            <li>AISignatureRegistry — <M>0x24bf7969482fa821e44e6370dbb055ef7d82f522</M></li>
-            <li>EmergencyGuard — <M>0xa6a6982F3b04C77D6f1a1acb875914285D10130A</M></li>
-            <li>WBOT — <M>0xD5452816194a3784dBa983426cCe7c122F4abd30</M></li>
+            <li>NodeRegistry: <M>0x40f611a9236f944dfea05cb20a5eb18d1eb87098</M></li>
+            <li>TheronFund: <M>0x4d4c6dcb8e93327c6d0f87511fc2c7da157fb313</M></li>
+            <li>TheronToken (TRN): <M>0xa518acb211c5ecbb140d98a081c11cbc5ff56541</M></li>
+            <li>YieldDistributor: <M>0xed91291c10555b4573b051661c0ee7538df32008</M></li>
+            <li>Restaking: <M>0x4423bdeb10c0637a225ec32d762fd61c5fbf143b</M></li>
+            <li>AISignatureRegistry: <M>0x24bf7969482fa821e44e6370dbb055ef7d82f522</M></li>
+            <li>EmergencyGuard: <M>0xa6a6982F3b04C77D6f1a1acb875914285D10130A</M></li>
+            <li>WBOT: <M>0xD5452816194a3784dBa983426cCe7c122F4abd30</M></li>
           </ul>
         ),
       },
@@ -381,11 +381,11 @@ export const DOCS: Record<string, Doc> = {
         heading: "Glossary",
         body: (
           <ul className="space-y-2">
-            <li><span className="text-text font-medium">NAV</span> — net asset value: total assets ÷ outstanding shares.</li>
-            <li><span className="text-text font-medium">TRN</span> — the fund's yield-bearing share token.</li>
-            <li><span className="text-text font-medium">DePIN</span> — decentralized physical infrastructure networks.</li>
-            <li><span className="text-text font-medium">Node</span> — registered physical compute hardware.</li>
-            <li><span className="text-text font-medium">WBOT</span> — wrapped BOT, the deposit asset.</li>
+            <li><span className="text-text font-medium">NAV</span>: net asset value: total assets ÷ outstanding shares.</li>
+            <li><span className="text-text font-medium">TRN</span>: the fund's yield-bearing share token.</li>
+            <li><span className="text-text font-medium">DePIN</span>: decentralized physical infrastructure networks.</li>
+            <li><span className="text-text font-medium">Node</span>: registered physical compute hardware.</li>
+            <li><span className="text-text font-medium">WBOT</span>: wrapped BOT, the deposit asset.</li>
           </ul>
         ),
       },
@@ -396,7 +396,7 @@ export const DOCS: Record<string, Doc> = {
           <ul className="space-y-4">
             <li>
               <p className="text-text font-medium">Can I withdraw at any time?</p>
-              <p className="text-muted">Base TRN — yes, at NAV. Restaked TRN — after its lock period.</p>
+              <p className="text-muted">Base TRN: yes, at NAV. Restaked TRN: after its lock period.</p>
             </li>
             <li>
               <p className="text-text font-medium">What backs the fund?</p>

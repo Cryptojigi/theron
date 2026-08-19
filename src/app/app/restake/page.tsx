@@ -218,7 +218,7 @@ export default function RestakePage() {
               Your {portfolio?.restaked?.toLocaleString()} TRN unlock at block{" "}
               <span className="font-mono text-text">{portfolio?.restakeUnlockBlock}</span> (
               ~{unlockDate.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" })}).
-              Unstake becomes available after that — it releases your full position.
+              Unstake becomes available after that. It releases your full position.
             </div>
           )}
           {hasPosition && !isLocked && (
@@ -257,7 +257,7 @@ export default function RestakePage() {
                   portfolio?.restaked
                     ? portfolio.restakeLocked
                       ? `Locked until block ${portfolio.restakeUnlockBlock}`
-                      : "Unlockable now — unstake anytime"
+                      : "Unlockable now: unstake anytime"
                     : "Boosted yield"
                 }
                 accent 
@@ -268,8 +268,8 @@ export default function RestakePage() {
           <div className="border border-border bg-surface p-6">
             <h2 className="font-display text-lg text-text mb-3">Why restake?</h2>
             <p className="text-sm text-muted leading-relaxed">
-              Restaked TRN earns up to 2× the base yield. Your boost applies to new yield instantly —
-              compound the machine economy, not just your principal.
+              Restaked TRN earns up to 2× the base yield. Your boost applies to new yield instantly and
+              compounds the machine economy, not just your principal.
             </p>
           </div>
         </div>

@@ -1,4 +1,4 @@
-# THERON — The AI Fund Manager
+# THERON: The AI Fund Manager
 
 An AI-managed RWA fund on BOT Chain. Money sits idle. Markets are slow. Humans are slower. THERON is an autonomous agent that moves capital into real DePIN infrastructure (GPUs, CPUs, compute nodes) and streams the returns back.
 
@@ -6,7 +6,7 @@ An AI-managed RWA fund on BOT Chain. Money sits idle. Markets are slow. Humans a
 
 ## Live Demo
 
-[Theron — live app on BOT Chain mainnet](https://theronfund.duckdns.org)
+[Theron: live app on BOT Chain mainnet](https://theronfund.duckdns.org)
 
 ## How it works
 
@@ -28,20 +28,20 @@ Every AI decision (underwrite / allocate / rebalance) is recorded on-chain with 
 ## Repository structure
 
 ```
-├── contracts/     # 7 Solidity contracts (Foundry) — 62 tests passing
-├── backend/       # TypeScript AI agent — Express API + decision loop
-└── src/           # Next.js frontend — wagmi wallet connect, live data
+├── contracts/     # 7 Solidity contracts (Foundry): 62 tests passing
+├── backend/       # TypeScript AI agent: Express API + decision loop
+└── src/           # Next.js frontend: wagmi wallet connect, live data
 ```
 
 ## Contracts
 
-- `NodeRegistry` — node registration, stake, uptime tracking, revenue reporting
-- `TheronFund` — deposit / withdraw (native BOT in, TRN shares out), AI allocation
-- `TheronToken` — ERC-4626 vault (WBOT in → TRN out)
-- `YieldDistributor` — yield claim engine
-- `Restaking` — restake yield for up to 2× boost
-- `AISignatureRegistry` — on-chain record of every AI decision
-- `EmergencyGuard` — 2-of-3 guardian circuit breaker
+- `NodeRegistry`: node registration, stake, uptime tracking, revenue reporting
+- `TheronFund`: deposit / withdraw (native BOT in, TRN shares out), AI allocation
+- `TheronToken`: ERC-4626 vault (WBOT in → TRN out)
+- `YieldDistributor`: yield claim engine
+- `Restaking`: restake yield for up to 2× boost
+- `AISignatureRegistry`: on-chain record of every AI decision
+- `EmergencyGuard`: 2-of-3 guardian circuit breaker
 
 ## Getting started
 

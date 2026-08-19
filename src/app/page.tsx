@@ -94,8 +94,8 @@ function Hero() {
 
             {/* Sub-Headline Narrative */}
             <p className="text-[15px] sm:text-base text-zinc-100 leading-relaxed max-w-xl mx-auto mb-3.5 font-medium sm:font-normal drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
-              Theron evaluates real decentralized compute nodes — GPU clusters, high-throughput CPUs, 
-              and physical infrastructure — deploying capital automatically and streaming revenue back 
+              Theron evaluates real decentralized compute nodes (GPU clusters, high-throughput CPUs, 
+              and physical infrastructure), deploying capital automatically and streaming revenue back 
               every single block.
             </p>
 
@@ -767,7 +767,7 @@ function FAQSection() {
     },
     {
       q: "Which blockchain network does Theron operate on?",
-      a: "Theron is built on BOT Chain — an EVM-compatible Layer 1 purpose-built for autonomous AI agents, high-frequency settlement, and DePIN economies. (Testnet Chain ID: 968, Mainnet Chain ID: 677).",
+      a: "Theron is built on BOT Chain, an EVM-compatible Layer 1 purpose-built for autonomous AI agents, high-frequency settlement, and DePIN economies. (Testnet Chain ID: 968, Mainnet Chain ID: 677).",
     },
   ];
 

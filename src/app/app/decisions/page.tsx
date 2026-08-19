@@ -47,7 +47,7 @@ export default function DecisionsPage() {
         ))}
       </div>
 
-      {/* Decision list — terminal log style */}
+      {/* Decision list: terminal log style */}
       <div className="border border-border bg-surface divide-y divide-border font-mono text-[13px]">
         {isLoading ? (
           <div className="px-5 py-8 text-center text-dim text-sm">Loading decisions...</div>

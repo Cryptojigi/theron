@@ -229,6 +229,15 @@ export default function WhitepaperPage() {
                 experimental and has not yet completed a formal third-party
                 audit.
               </p>
+              <p>
+                The current minimum operator stake is a deliberately low
+                launch value, set to allow controlled testing of the protocol
+                with limited capital. As the fund grows and allocation sizes
+                increase, the minimum will be raised so that an operator's
+                collateral remains meaningful relative to the capital it
+                manages. Stake is intended to scale with exposure as the fund
+                matures.
+              </p>
             </>
           ),
         },
@@ -265,6 +274,11 @@ export default function WhitepaperPage() {
                 <li>
                   Expand scoring with deeper revenue verification and
                   on-chain proof of hardware.
+                </li>
+                <li>
+                  Raise the minimum operator stake in line with fund growth,
+                  keeping collateral proportionate to the capital each
+                  operator manages.
                 </li>
               </ul>
             </>

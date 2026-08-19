@@ -3,9 +3,9 @@ import "./globals.css";
 import MarketingShell from "@/components/MarketingShell";
 
 export const metadata: Metadata = {
-  title: "Theron — The AI Fund Manager",
+  title: "Theron: The AI Fund Manager",
   description:
-    "Theron is an AI-managed RWA fund on BOT Chain. Your money, managed by an AI that owns real machines — earning yield from DePIN compute nodes, streamed every second.",
+    "Theron is an AI-managed RWA fund on BOT Chain. Your money, managed by an AI that owns real machines, earning yield from DePIN compute nodes, streamed every second.",
   icons: {
     icon: [
       { url: "/favicon-16.png", sizes: "16x16", type: "image/png" },
