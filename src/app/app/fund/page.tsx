@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import AppShell from "@/components/AppShell";
 import { useFundStats, useNodes, usePortfolio } from "@/lib/hooks";
 import { useAccount, useBalance, useChainId, useSwitchChain, useWriteContract } from "wagmi";
@@ -16,7 +17,16 @@ export default function FundPage() {
   const { address, isConnected } = useAccount();
   const chainId = useChainId();
   const { switchChain } = useSwitchChain();
-  const { data: balanceData } = useBalance({ address });
+  const { data: balanceData, refetch: refetchBalance } = useBalance({ address });
+  const queryClient = useQueryClient();
+
+  // Keep the wallet balance fresh without a manual refresh: poll every 10s
+  // while a wallet is connected (deposits/withdraws then show up on screen).
+  useEffect(() => {
+    if (!address) return;
+    const t = setInterval(() => refetchBalance(), 10_000);
+    return () => clearInterval(t);
+  }, [address, refetchBalance]);
   const { data: portfolio } = usePortfolio(address);
 
   const [action, setAction] = useState<"Deposit" | "Withdraw">("Deposit");
@@ -93,6 +103,7 @@ export default function FundPage() {
       }
       setSuccessMsg("Transaction successful!");
       setAmount("");
+      queryClient.invalidateQueries(); // refresh balance + portfolio instantly
     } catch (e: any) {
       console.error(e);
       setTxError(e?.shortMessage || e?.message || "Transaction failed");
